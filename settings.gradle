@@ -1,0 +1,2 @@
+rootProject.name='larkMessage'
+include ':app'

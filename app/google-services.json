@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "776595116941",
+    "firebase_url": "https://larkmessage.firebaseio.com",
+    "project_id": "larkmessage",
+    "storage_bucket": "larkmessage.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776595116941:android:dfb124796d679b8ed163c4",
+        "android_client_info": {
+          "package_name": "com.example.larkmessage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "776595116941-b9eetms5206u4r90gg7vlggiu0vr2vfb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.larkmessage",
+            "certificate_hash": "6d82a7313220dddac1349e423d45d7257500add0"
+          }
+        },
+        {
+          "client_id": "776595116941-uge45vjs3lsi80nq2pvsfhmjf3mg0ebq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxrDsSGIbzHSK5bsKdJ2PKQ1UOZHcLRrY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "776595116941-uge45vjs3lsi80nq2pvsfhmjf3mg0ebq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -30,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     private static final  int RC_SIGN_IN =123;
     private FirebaseAuth mAuth;
     private AppBarConfiguration mAppBarConfiguration;
+    private TextView navMailTextView;
+    private TextView navNameTextView;
+    private ImageView navIconImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                loginFcn();
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -57,11 +61,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user==null)
-        {
+
             loginFcn();
-        }
+
+
+
     }
 
     @Override
@@ -89,13 +93,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        navIconImageView = findViewById(R.id.navIcon_imageView);
+        navMailTextView = findViewById(R.id.navMail_textView);
+        navNameTextView = findViewById(R.id.navName_textView);
         if(requestCode==RC_SIGN_IN)
         {
             IdpResponse idpResponse =IdpResponse.fromResultIntent(data);
             if(resultCode==RESULT_OK) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 System.out.println("successful"+user.getDisplayName()+user.getEmail()+user.getPhoneNumber());
+                navNameTextView.setText(user.getDisplayName());
+                navMailTextView.setText(user.getEmail());
+                navIconImageView.setImageResource(R.drawable.nn1);
                 //Intent intent = new Intent(MainActivity.this,readingActicity.class);
                 //intent.putExtra(USERCODE,auth);
                 //startActivity(intent);

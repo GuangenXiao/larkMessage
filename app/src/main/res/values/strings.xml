@@ -27,4 +27,17 @@
     <string name="nav_setting">Setting</string>
     <string name="nav_logout">logout</string>
     <string name="nav_moment">Moment Gallery</string>
+    <string name="logout_version">Thanks for your support to our app!</string>
+    <string name="app_title">LARK MESSAGE</string>
+    <string name="email">EMAIL</string>
+
+    <string name="sign_in">SIGN IN</string>
+
+    <string name="your_email_address">your email address</string>
+    <string name="your_password">Your password</string>
+    <string name="name">NAME</string>
+    <string name="phone">PHONE</string>
+    <string name="password">PASSWORD</string>
+    <string name="register">REGISTER</string>
+    <string name="cancel">CANCEL</string>
 </resources>

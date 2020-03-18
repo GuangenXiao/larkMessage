@@ -1,15 +1,23 @@
 package com.example.larkmessage;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.larkmessage.unit.loginUnit;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.flask.colorpicker.ColorPickerView;
+import com.flask.colorpicker.OnColorSelectedListener;
+import com.flask.colorpicker.builder.ColorPickerClickListener;
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -26,21 +34,33 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private static final  int RC_SIGN_IN =123;
     private FirebaseAuth mAuth;
     private AppBarConfiguration mAppBarConfiguration;
     private TextView navMailTextView;
     private TextView navNameTextView;
     private ImageView navIconImageView;
-
+    public static final String KEY_BACKGROUND_COLOR ="KEY_BACKGROUND_COLOR";
+    private final static String PREFS = "PREFS";
+    private static  final  String KEY_PASSWORD="key_password";
+    private  static  final  String KEY_EMAIL ="key_email";
+    private int mCurrentBackgroundColor = Color.WHITE;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseUser user =FirebaseAuth.getInstance().getCurrentUser();
+        if(user==null)
+        {
+            Intent intent = new Intent(this,WelcomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
@@ -53,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginFcn();
+                ;
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -69,68 +89,72 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         mAuth = FirebaseAuth.getInstance();
 
-            loginFcn();
+        View v= navigationView.getHeaderView(0);
+        navIconImageView = v.findViewById(R.id.navIcon_imageView);
+        navMailTextView = v.findViewById(R.id.navMail_textView);
+        navNameTextView =v.findViewById(R.id.navName_textView);
+        if(user!=null)
+        {
 
+            navNameTextView.setText(user.getDisplayName());
+            navMailTextView.setText(user.getEmail());
+            navIconImageView.setImageResource(R.drawable.nn1);
+        }
 
 
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-
-    public void loginFcn()
-    {
-        List<AuthUI.IdpConfig> list= Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build());
-        startActivityForResult(
-                AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(list).build(),RC_SIGN_IN
-        );
+    protected void showColorDialog() {
+        ColorPickerDialogBuilder
+                .with(this)
+                .setTitle("Choose color")
+                .initialColor(mCurrentBackgroundColor)
+                .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
+                .density(12)
+                .setOnColorSelectedListener(new OnColorSelectedListener() {
+                    @Override
+                    public void onColorSelected(int selectedColor) {
+                        //Toast("onColorSelected: 0x" + Integer.toHexString(selectedColor));
+                    }
+                })
+                .setPositiveButton("ok", new ColorPickerClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
+                        // changeBackgroundColor(selectedColor);
+                    }
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .build()
+                .show();
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        navIconImageView = findViewById(R.id.navIcon_imageView);
-        navMailTextView = findViewById(R.id.navMail_textView);
-        navNameTextView = findViewById(R.id.navName_textView);
-        if(requestCode==RC_SIGN_IN)
-        {
-            IdpResponse idpResponse =IdpResponse.fromResultIntent(data);
-            if(resultCode==RESULT_OK) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                System.out.println("successful"+user.getDisplayName()+user.getEmail()+user.getPhoneNumber());
-                navNameTextView.setText(user.getDisplayName());
-                navMailTextView.setText(user.getEmail());
-                navIconImageView.setImageResource(R.drawable.nn1);
-                //Intent intent = new Intent(MainActivity.this,readingActicity.class);
-                //intent.putExtra(USERCODE,auth);
-                //startActivity(intent);
-            }
-            else
-            {
-                if(idpResponse ==null)
-                {
-                    System.out.println("Sign in cancelled");
-                    loginFcn();
-                    return;
-                }
-                if(idpResponse.getError().getErrorCode()== ErrorCodes.NO_NETWORK)
-                {
-                    System.out.println("no internet connection");
-                    loginFcn();
-                    return;
-                }
-            }
-        }
+    protected void onPause() {
+        super.onPause();
+
+        SharedPreferences prefs = getSharedPreferences( PREFS, MODE_PRIVATE );
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt( KEY_BACKGROUND_COLOR,mCurrentBackgroundColor);
+        // Put the other fields into the editor
+        editor.commit();
+        /*try {
+            checkPlan();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }*/
     }
 }

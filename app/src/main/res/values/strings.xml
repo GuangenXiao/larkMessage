@@ -40,4 +40,5 @@
     <string name="password">PASSWORD</string>
     <string name="register">REGISTER</string>
     <string name="cancel">CANCEL</string>
+    <string name="friend_dialog">ADD A NEW FRIEND</string>
 </resources>

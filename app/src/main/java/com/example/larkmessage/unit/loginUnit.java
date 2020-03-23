@@ -23,6 +23,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -73,6 +75,7 @@ public class loginUnit {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
+                            u.setUserId(user.getUid());
                             new userUnit().createAccountInfo(user,u,activity);
                         } else {
                             Toast.makeText(activity, "already registered or no internet",
@@ -184,10 +187,9 @@ public class loginUnit {
                         if (task.isSuccessful()) {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             System.out.println("successful"+user.getDisplayName()+user.getEmail()+user.getPhoneNumber());
-                            Intent intent = new Intent(activity, MainActivity.class);
+
                             //intent.putExtra(USERCODE,auth);
-                            activity.startActivity(intent);
-                            activity.finish();
+                            readUserInfo(user,activity);
                         } else {
                             Toast.makeText(activity, "sign in failed.", Toast.LENGTH_SHORT).show();
                             return;
@@ -196,6 +198,50 @@ public class loginUnit {
                         // ...
                     }
                 });
+    }
+
+
+    public void readUserInfo(FirebaseUser user , final Activity activity)
+    {
+        if(user==null ) return;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        UserItem userItem=null;
+
+        DocumentReference docRef = db.collection("UserList").document(user.getEmail());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Map<String,Object> m = document.getData();
+                        Intent intent = new Intent(activity, MainActivity.class);
+                        try {
+                            UserItem u = new UserItem.Builder(m.get("UserName").toString(),m.get("Email").toString())
+                                    .phoneNumber(m.get("PhoneNumber").toString())
+                                    .password(m.get("Password").toString())
+                                    .userId(m.get("UserId").toString())
+                                    .time(m.get("RegisterDate").toString())
+                                    .bgColor(Integer.parseInt(m.get("BackgroundColor").toString()))
+                                    .textSize(Integer.parseInt(m.get("TextSize").toString()))
+                                    .textStyle(Integer.parseInt(m.get("TextStyle").toString()))
+                                    .Build();
+                            intent.putExtra("userInfo", (Serializable) u);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        activity.startActivity(intent);
+                        activity.finish();
+                    } else {
+                        Log.d("error", "No such document");
+                    }
+                } else {
+                    Log.d("error", "get failed with ", task.getException());
+                }
+            }
+        });
     }
 
 }

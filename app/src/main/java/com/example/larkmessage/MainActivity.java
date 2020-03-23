@@ -1,5 +1,6 @@
 package com.example.larkmessage;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +11,9 @@ import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.larkmessage.entity.UserItem;
 import com.example.larkmessage.unit.loginUnit;
+import com.example.larkmessage.unit.userUnit;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String PREFS = "PREFS";
     private static  final  String KEY_PASSWORD="key_password";
     private  static  final  String KEY_EMAIL ="key_email";
-    private int mCurrentBackgroundColor = Color.WHITE;
+    private UserItem userItem= null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-
+        userItem= (UserItem) getIntent().getSerializableExtra("userInfo");
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
@@ -73,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ;
+
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         if(user!=null)
         {
 
-            navNameTextView.setText(user.getDisplayName());
+            navNameTextView.setText(userItem.getUserName());
             navMailTextView.setText(user.getEmail());
             navIconImageView.setImageResource(R.drawable.nn1);
         }
@@ -115,40 +118,22 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-    protected void showColorDialog() {
-        ColorPickerDialogBuilder
-                .with(this)
-                .setTitle("Choose color")
-                .initialColor(mCurrentBackgroundColor)
-                .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
-                .density(12)
-                .setOnColorSelectedListener(new OnColorSelectedListener() {
-                    @Override
-                    public void onColorSelected(int selectedColor) {
-                        //Toast("onColorSelected: 0x" + Integer.toHexString(selectedColor));
-                    }
-                })
-                .setPositiveButton("ok", new ColorPickerClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
-                        // changeBackgroundColor(selectedColor);
-                    }
-                })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .build()
-                .show();
+
+
+    public UserItem getUserItem() {
+        return userItem;
     }
+
+    public void setUserItem(UserItem userItem) {
+        this.userItem = userItem;
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
 
         SharedPreferences prefs = getSharedPreferences( PREFS, MODE_PRIVATE );
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt( KEY_BACKGROUND_COLOR,mCurrentBackgroundColor);
         // Put the other fields into the editor
         editor.commit();
         /*try {

@@ -41,8 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/your_email_address" />
+            android:hint="@string/your_email_address"
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/welcome_password_Textview"
@@ -57,8 +57,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPassword"
-            android:text="@string/your_password" />
+            android:hint="@string/your_password"
+            android:inputType="textPassword" />
 
         <TextView
             android:id="@+id/welcome_forget_passwords"

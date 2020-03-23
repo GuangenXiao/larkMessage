@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class userUnit {
-    public void createAccountInfo(FirebaseUser user, UserItem u , final Activity activity)
+    public void  createAccountInfo(FirebaseUser user, UserItem u , final Activity activity)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> newUser = new HashMap<>();
@@ -72,7 +72,11 @@ public class userUnit {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Map<String,Object> m = document.getData();
-                        UserItem userItem = new UserItem.Builder(m.get("Username").toString(),m.get("Username").toString()).userId(FirebaseAuth.getInstance().getCurrentUser().getUid()).Build();
+                        try {
+                            UserItem userItem = new UserItem.Builder(m.get("Username").toString(),m.get("Username").toString()).userId(FirebaseAuth.getInstance().getCurrentUser().getUid()).Build();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                     } else {
                         Log.d("error", "No such document");
                     }
@@ -83,5 +87,50 @@ public class userUnit {
         });
 
     }
+    public void changeUserInfo(final UserItem newUInfo)
+    {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user==null ||  newUInfo==null) return;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        UserItem userItem=null;
 
+        DocumentReference docRef = db.collection("UserList").document(user.getEmail());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Map<String,Object> m = document.getData();
+                        if(newUInfo.getBgColor()!=null){m.put("BackgroundColor",newUInfo.getBgColor());
+                        insert(m,user);
+                        }
+                    } else {
+                        Log.d("error", "No such document");
+                    }
+                } else {
+                    Log.d("error", "get failed with ", task.getException());
+                }
+            }
+        });
+    }
+
+    public  void insert(Map<String,Object> m, FirebaseUser user )
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("UserList").document(user.getEmail())
+                .set(m)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("error", "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("error", "Error writing document", e);
+                    }
+                });
+    }
 }

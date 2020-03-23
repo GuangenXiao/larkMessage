@@ -1,4 +1,4 @@
-package com.example.larkmessage.ui.slideshow;
+package com.example.larkmessage;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.larkmessage.MainActivity;
 import com.example.larkmessage.R;
 import com.example.larkmessage.unit.loginUnit;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +38,7 @@ public class SlideshowFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         loginunit =new loginUnit();
         logoutButton =view.findViewById(R.id.logout_button);
+        updateUI(view);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,4 +53,11 @@ public class SlideshowFragment extends Fragment {
             }
         });
     }
+
+    public  void updateUI(View view)
+    {
+        if(((MainActivity)getActivity()).getUserItem().getBgColor()!=null)
+            view.setBackgroundColor(((MainActivity)getActivity()).getUserItem().getBgColor());
+    }
+
 }

@@ -16,7 +16,10 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.larkmessage.entity.UserItem;
+import com.example.larkmessage.unit.ValidationUnit;
 import com.example.larkmessage.unit.loginUnit;
+
+import java.text.ParseException;
 
 public class RegisterActivity extends AppCompatActivity {
     private Switch passwordSwitch;
@@ -72,8 +75,24 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = emailEditText.getText().toString();
                 String password =passwordEditText.getText().toString();
                 String phone=phoneEditText.getText().toString();
-               if(name.length()>0&&email.length()>0&&password.length()>0&&phone.length()>0)
-                   new loginUnit().createAccount(new UserItem.Builder(name,email).password(password).phoneNumber(phone).Build(),RegisterActivity.this);
+
+                if(ValidationUnit.checkEmail(email)==false)
+                {
+                    Toast.makeText(RegisterActivity.this, "Invalued email", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(ValidationUnit.isMobileNO(phone)==false)
+                {
+                    Toast.makeText(RegisterActivity.this, "Invalued email phone number", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+               if(name.length()>0&&email.length()>0&&password.length()>0&&phone.length()>0) {
+                   try {
+                       new loginUnit().createAccount(new UserItem.Builder(name,email).password(password).phoneNumber(phone).Build(),RegisterActivity.this);
+                   } catch (ParseException e) {
+                       e.printStackTrace();
+                   }
+               }
 
                else
                {

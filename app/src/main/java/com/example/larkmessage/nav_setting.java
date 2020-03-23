@@ -16,7 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.larkmessage.entity.UserItem;
 import com.example.larkmessage.unit.loginUnit;
+import com.example.larkmessage.unit.userUnit;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
@@ -40,6 +42,7 @@ public class nav_setting extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private View view;
     public nav_setting() {
         // Required empty public constructor
     }
@@ -75,7 +78,8 @@ public class nav_setting extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_nav_setting, container, false);
+       view= inflater.inflate(R.layout.fragment_nav_setting, container, false);
+        return view;
     }
 
     @Override
@@ -83,13 +87,54 @@ public class nav_setting extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         button =view.findViewById(R.id.color_button);
+        updateUI();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).showColorDialog();
+               showColorDialog();
+
             }
         });
     }
+    public  void updateUI()
+    {
+        if(((MainActivity)getActivity()).getUserItem().getBgColor()!=null)
+            view.setBackgroundColor(((MainActivity)getActivity()).getUserItem().getBgColor());
+    }
 
-
+    protected void showColorDialog() {
+        ColorPickerDialogBuilder
+                .with(getActivity())
+                .setTitle("Choose color")
+                .initialColor(mCurrentBackgroundColor)
+                .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
+                .density(12)
+                .setOnColorSelectedListener(new OnColorSelectedListener() {
+                    @Override
+                    public void onColorSelected(int selectedColor) {
+                        //Toast("onColorSelected: 0x" + Integer.toHexString(selectedColor));
+                    }
+                })
+                .setPositiveButton("ok", new ColorPickerClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
+                        // changeBackgroundColor(selectedColor);
+                        UserItem u =new UserItem();
+                        u.setBgColor(selectedColor);
+                        UserItem userItem =((MainActivity)getActivity()).getUserItem();
+                        if(userItem!=null) {userItem.setBgColor(selectedColor);
+                            ((MainActivity)getActivity()).setUserItem(userItem);
+                        }
+                        updateUI();
+                        new userUnit().changeUserInfo(u);
+                    }
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .build()
+                .show();
+    }
 }

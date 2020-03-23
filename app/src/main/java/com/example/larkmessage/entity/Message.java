@@ -4,13 +4,14 @@ public class Message {
 
     String ID;
     String username;
-    String conetxt;
+    String context;
     String time;
-
-    public Message(String ID, String username, String conetxt, String time) {
+    String receiver;
+    public Message(String ID, String username, String context, String time,String receiver) {
         this.ID = ID;
         this.username = username;
-        this.conetxt = conetxt;
+        this.receiver =receiver;
+        this.context = context;
         this.time = time;
     }
 
@@ -30,12 +31,12 @@ public class Message {
         this.username = username;
     }
 
-    public String getConetxt() {
-        return conetxt;
+    public String getContext() {
+        return context;
     }
 
-    public void setConetxt(String conetxt) {
-        this.conetxt = conetxt;
+    public void setContext(String conetxt) {
+        this.context = conetxt;
     }
 
     public String getTime() {
@@ -44,5 +45,13 @@ public class Message {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 }

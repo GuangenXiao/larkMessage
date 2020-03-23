@@ -1,10 +1,20 @@
 package com.example.larkmessage.entity;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Icon;
 import android.os.Build;
 
-public class UserItem{
+import com.example.larkmessage.R;
+import com.example.larkmessage.unit.DateUnit;
+
+import java.io.Serializable;
+import java.text.ParseException;
+
+public class UserItem implements Serializable {
     private String userName=null;
     private String userId=null;
+    private Integer icon=null;
     private String password=null;
     private Integer textSize=null;
     private Integer textStyle=null;
@@ -14,13 +24,18 @@ public class UserItem{
     private String time=null;
     private final   String FriendListKey="friendList";
     private final   String MomentListKey="MomentList";
-    public UserItem(String userName, String userId,String password, Integer textSize, Integer textStyle, Integer bgColor, String phoneNumber, String email, String time) {
+
+    public UserItem() {
+    }
+
+    public UserItem(String userName, String userId, String password, Integer textSize, Integer textStyle, Integer bgColor, String phoneNumber, String email, String time,Integer icon) {
         this.password =password;
         this.userName = userName;
         this.userId = userId;
         this.textSize = textSize;
         this.textStyle = textStyle;
         this.bgColor = bgColor;
+        this.icon= icon;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.time = time;
@@ -38,20 +53,26 @@ public class UserItem{
         private String password=null;
         private String userName=null;
         private String userId=null;
-        private Integer textSize=null;
-        private Integer textStyle=null;
-        private Integer bgColor=null;
+        private Integer textSize=15;
+        private Integer textStyle= Typeface.SANS_SERIF.getStyle();
+        private Integer bgColor= -4423;
         private String phoneNumber=null;
+        private Integer icon= R.drawable.nn2;
         private String email=null;
-        private String time=null;
-        public Builder(String userName, String email)
-        {
+        protected DateUnit dateUnit =new DateUnit();
+        private String time=DateUnit.getSystemTimeAndDate();
+        public Builder(String userName, String email) throws ParseException {
             this.userName =userName;
             this.email =email;
         }
         public Builder userId(String userId)
         {
             this.userId=userId;
+            return this;
+        }
+        public Builder icon(Integer icon)
+        {
+            this.icon = icon;
             return this;
         }
         public Builder textSize(Integer textSize)
@@ -64,7 +85,7 @@ public class UserItem{
             this.password=password;
             return this;
         }
-        public  Builder textStyle()
+        public  Builder textStyle(Integer textStyle)
         {
             this.textStyle =textStyle;
             return this;
@@ -87,7 +108,7 @@ public class UserItem{
         }
         public UserItem Build()
         {
-            return new UserItem( userName,  userId,password,  textSize,  textStyle,  bgColor,  phoneNumber, email, time);
+            return new UserItem( userName,  userId,password,  textSize,  textStyle,  bgColor,  phoneNumber, email, time,icon);
         }
     }
 
@@ -161,5 +182,13 @@ public class UserItem{
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public Integer getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Integer icon) {
+        this.icon = icon;
     }
 }

@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.friend_recycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
-        friendAdapter =new FriendAdapter(getActivity());
+        friendAdapter =new FriendAdapter(getActivity(),userItem);
         recyclerView.setAdapter(friendAdapter);
         ListenFriends();
     }

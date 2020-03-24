@@ -3,9 +3,10 @@ package com.example.larkmessage.entity;
 import com.example.larkmessage.R;
 import com.example.larkmessage.unit.DateUnit;
 
+import java.io.Serializable;
 import java.text.ParseException;
 
-public class Friend {
+public class Friend implements Serializable {
     String email;
     Boolean accessMoment;
     Boolean letHimAccessMoment;

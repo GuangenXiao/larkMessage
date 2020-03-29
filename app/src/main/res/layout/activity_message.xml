@@ -22,23 +22,16 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/message_recycle"
             android:layout_width="match_parent"
+            android:layout_marginBottom="80dp"
             android:layout_height="match_parent" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/message_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:layout_marginBottom="100dp"
-            app:srcCompat="@android:drawable/ic_dialog_email" />
 
         <LinearLayout
             android:id="@+id/message_linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:layout_gravity="bottom"
+            android:layout_marginBottom="16dp"
+            android:background="@color/bgColor"
             android:orientation="horizontal"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="16dp">
@@ -60,6 +53,20 @@
                 android:text="send" />
         </LinearLayout>
 
+        <com.devs.squaremenu.SquareMenu
+            android:id="@+id/square_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center|end"
+            app:autoClose="false"
+            app:fabColor="@color/colorAccent"
+            app:iconM1="@drawable/nn2"
+            app:iconM2="@drawable/nn3"
+            app:iconM3="@drawable/nn4"
+            app:menuOpenDirection="top_left"
+            app:squareFabSize="200" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

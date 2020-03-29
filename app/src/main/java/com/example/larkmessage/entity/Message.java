@@ -6,13 +6,31 @@ import java.text.ParseException;
 
 public class Message {
 
-    String ID;
     String username;
     String context;
     String time;
     String receiver;
-    public Message(String ID, String username, String context,String receiver) {
-        this.ID = ID;
+    String ImageResource;
+
+    public String getImageResource() {
+        return ImageResource;
+    }
+
+    public void setImageResource(String imageResource) {
+        ImageResource = imageResource;
+    }
+
+    public  Message()
+    {
+        this.time =null;
+        try {
+            this.time = DateUnit.getSystemTimeAndDate();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+    public Message( String username, String context, String receiver) {
+
         this.username = username;
         this.receiver =receiver;
         this.context = context;
@@ -24,13 +42,6 @@ public class Message {
         }
     }
 
-    public String getID() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
-    }
 
     public String getUsername() {
         return username;

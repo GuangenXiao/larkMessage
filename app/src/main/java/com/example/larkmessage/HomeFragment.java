@@ -28,6 +28,7 @@ import com.example.larkmessage.MainActivity;
 import com.example.larkmessage.R;
 import com.example.larkmessage.adapter.FriendAdapter;
 import com.example.larkmessage.adapter.MessageAdapter;
+import com.example.larkmessage.entity.Chat;
 import com.example.larkmessage.entity.Friend;
 import com.example.larkmessage.entity.Message;
 import com.example.larkmessage.entity.UserItem;
@@ -42,6 +43,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -59,9 +61,7 @@ import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
-    private TextView navMailTextView;
-    private TextView navNameTextView;
-    private ImageView navIconImageView;
+
     private DateUnit u =new DateUnit();
     private  UserItem userItem ;
     private Friend friend;
@@ -218,8 +218,8 @@ public class HomeFragment extends Fragment {
                                DocumentSnapshot documentSnapshot =snapshot.getDocuments().get(0);
                                Map<String ,Object> m = documentSnapshot.getData();
                                friend.setUserName(m.get("UserName").toString());
-                                friend.setIcon(R.drawable.nn8);
-                               addFriends(friend);
+                               friend.setIcon(R.drawable.nn8);
+                                CreateChatting(friend);
                             }
 
                         } else {
@@ -260,6 +260,7 @@ public class HomeFragment extends Fragment {
         yourself.setEmail(userItem.getEmail());
         yourself.setIcon(userItem.getIcon());
         yourself.setUserName(userItem.getUserName());
+        yourself.setMessageId(friend.getMessageId());
         db.collection("UserList").document(friend.getEmail()).collection("FriendList").document(userItem.getEmail())
                 .set(yourself)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -275,6 +276,35 @@ public class HomeFragment extends Fragment {
                     }
                 });
     }
+    protected void CreateChatting(final Friend friend)  {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Chat chat =new Chat();
+        chat.setChattingName(null);
+        try {
+            chat.setCreateDate(DateUnit.getSystemTimeAndDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        ArrayList<String> userlist = new ArrayList<>();
+        userlist.add(userItem.getEmail());
+        userlist.add(friend.getEmail());
+        chat.setEmailList(userlist);
+        db.collection("Chatting")
+                .add(chat)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        friend.setMessageId(documentReference.getId());
+                        addFriends(friend);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
+    }
+
     protected void writeData(Message message)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();

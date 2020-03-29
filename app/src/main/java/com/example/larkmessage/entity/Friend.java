@@ -14,6 +14,15 @@ public class Friend implements Serializable {
     Boolean type;
     String userName;
     Integer icon;
+    String messageId;
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
+    }
 
     public Integer getIcon() {
         return icon;

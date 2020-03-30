@@ -137,6 +137,8 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onClickMenu1() {
                 Intent intent =new Intent(MessageActivity.this,MapsActivity.class);
+                intent.putExtra("friend",friend);
+                intent.putExtra("user",userItem);
                 startActivity(intent);
             }
             @Override

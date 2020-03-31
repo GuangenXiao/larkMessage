@@ -20,11 +20,13 @@ import android.widget.Toast;
 import com.example.larkmessage.entity.Friend;
 import com.example.larkmessage.entity.Message;
 import com.example.larkmessage.entity.UserItem;
+import com.example.larkmessage.entity.exLocation;
 import com.example.larkmessage.unit.PermissionUtils;
 import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -218,6 +220,7 @@ public class MapsActivity extends FragmentActivity
                     Map<String, Object> m = documentSnapshot.getData();
                     Double latitude = Double.parseDouble(m.get("latitude").toString());
                     Double longitude = Double.parseDouble(m.get("longitude").toString());
+                    //friendLocation =documentSnapshot.toObject(exLocation.class);
                     if (latitude != null && longitude != null)
                         placeMarkerOnMap(latitude, longitude);
                 }
@@ -252,5 +255,6 @@ public class MapsActivity extends FragmentActivity
         // 2
         mMap.clear();
       mMap.addMarker(markerOptions);
+      //mMap.setLocationSource((LocationSource) friendLocation);
     }
 }

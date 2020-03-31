@@ -23,17 +23,14 @@ import com.google.firebase.auth.FirebaseUser;
 import java.text.ParseException;
 
 public class WelcomeActivity extends AppCompatActivity {
-    private TextView navMailTextView;
-    private TextView navNameTextView;
-    private ImageView navIconImageView;
+
     private EditText welEMailEditView;
     private EditText welPasswordEditView;
     private Button welRegisterButton;
     private Button welSignInButton;
     private String email;
     private String password;
-    private static final  int RC_SIGN_IN =123;
-    private static final  int RC_CREATE =456;
+
     private final static String PREFS = "PREFS";
     private static  final  String KEY_PASSWORD="key_password";
     private  static  final  String KEY_EMAIL ="key_email";

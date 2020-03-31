@@ -81,6 +81,7 @@ public class MessageActivity extends AppCompatActivity {
         Intent intent =getIntent();
         userItem = (UserItem) intent.getSerializableExtra("user");
         friend = (Friend) intent.getSerializableExtra("friend");
+
         ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null)
         {
@@ -95,7 +96,10 @@ public class MessageActivity extends AppCompatActivity {
         recyclerView.setAdapter(Adapter);
         button = findViewById(R.id.message_button);
         editText = findViewById(R.id.message_editText);
-
+        if(userItem.getBgColor()!=null) {
+            recyclerView.setBackgroundColor(userItem.getBgColor());
+            findViewById(R.id.Message_coorLay).setBackgroundColor(userItem.getBgColor());
+        }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

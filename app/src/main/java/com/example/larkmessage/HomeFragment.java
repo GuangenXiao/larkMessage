@@ -223,7 +223,7 @@ public class HomeFragment extends Fragment {
                             }
 
                         } else {
-                            Toast.makeText(getContext()," internet serror",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext()," internet error",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

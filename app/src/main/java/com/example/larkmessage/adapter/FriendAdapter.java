@@ -72,6 +72,25 @@ private UserItem userItem;
             }
         });
     }
+    protected void  showRefuseDialog(final Integer position)
+    {
+        final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(context);
+        alterDiaglog.setIcon(R.mipmap.ic_launcher);
+        alterDiaglog.setTitle("Are you sure to delete your friends?");
+        alterDiaglog.setMessage("this option can't be cancelled.");
+        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        alterDiaglog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                refuseFriends(list.get(position ));
+            }
+        });
+        alterDiaglog.show();
+    }
     protected void checkStatus(final Integer position)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -102,25 +121,6 @@ private UserItem userItem;
         intent.putExtra("friend",friend);
         intent.putExtra("user",userItem);
         startActivity(context,intent,bundle);
-    }
-    protected void  showRefuseDialog(final Integer position)
-    {
-        final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(context);
-        alterDiaglog.setIcon(R.mipmap.ic_launcher);
-        alterDiaglog.setTitle("Are you sure to delete your friends?");
-        alterDiaglog.setMessage("this option can't be cancelled.");
-        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        alterDiaglog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                refuseFriends(list.get(position ));
-            }
-        });
-        alterDiaglog.show();
     }
     protected void  showWaitingDialog()
     {

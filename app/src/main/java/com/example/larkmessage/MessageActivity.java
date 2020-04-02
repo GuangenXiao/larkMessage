@@ -1,31 +1,26 @@
 package com.example.larkmessage;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.accessibilityservice.AccessibilityService;
-import android.content.Intent;
-import android.graphics.Rect;
-import android.inputmethodservice.KeyboardView;
-import android.os.Build;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
 import com.devs.squaremenu.OnMenuClickListener;
 import com.devs.squaremenu.SquareMenu;
-import com.example.larkmessage.adapter.FriendAdapter;
 import com.example.larkmessage.adapter.MessageAdapter;
 import com.example.larkmessage.entity.Friend;
 import com.example.larkmessage.entity.Message;
@@ -38,8 +33,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -49,8 +42,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MessageActivity extends AppCompatActivity {
     private UserItem userItem;
@@ -128,7 +119,7 @@ public class MessageActivity extends AppCompatActivity {
 
         setListener(friend);
         floatTool();
-
+        if(friend.getType()==false)showAcceptDialog();
     }
      void  floatTool()
     {
@@ -151,7 +142,56 @@ public class MessageActivity extends AppCompatActivity {
             public void onClickMenu3() { }
         });
     }
+    protected void  showAcceptDialog()
+    {
+        final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(this);
+        alterDiaglog.setIcon(R.mipmap.ic_launcher);
+        alterDiaglog.setTitle(R.string.friend_dialog);
+        alterDiaglog.setMessage("Do you want to accept the invitation from "+friend.getUserName()+"?");
 
+        alterDiaglog.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MessageActivity.this, "Click Add", Toast.LENGTH_SHORT).show();
+                addFriends(friend);
+            }
+        });
+        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MessageActivity.this,"Click Continue",Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+        alterDiaglog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                finish();
+            }
+        });
+        alterDiaglog.show();
+    }
+
+
+    protected void addFriends(final Friend friend)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        friend.setType(true);
+        db.collection("UserList").document(userItem.getEmail()).collection("FriendList").document(friend.getEmail())
+                .set(friend)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
     protected void SendMessage(Message message) throws ParseException {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Chatting").document(friend.getMessageId()).collection("MessageList").document(userItem.getUserName()+ DateUnit.getSystemTimeAndDate())

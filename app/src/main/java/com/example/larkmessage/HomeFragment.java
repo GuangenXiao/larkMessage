@@ -231,13 +231,13 @@ public class HomeFragment extends Fragment {
     protected void addFriends(final Friend friend)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Map<String, Object> newFriend = new HashMap<>();
-
+        friend.setType(true);
         db.collection("UserList").document(userItem.getEmail()).collection("FriendList").document(friend.getEmail())
                 .set(friend)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+
                         addYouToYourFriend(friend);
                     }
                 })
@@ -261,6 +261,7 @@ public class HomeFragment extends Fragment {
         yourself.setIcon(userItem.getIcon());
         yourself.setUserName(userItem.getUserName());
         yourself.setMessageId(friend.getMessageId());
+        yourself.setType(false);
         db.collection("UserList").document(friend.getEmail()).collection("FriendList").document(userItem.getEmail())
                 .set(yourself)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

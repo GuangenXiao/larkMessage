@@ -30,18 +30,8 @@ public class userUnit {
     public void  createAccountInfo(FirebaseUser user, UserItem u , final Activity activity)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Map<String, Object> newUser = new HashMap<>();
-        newUser.put("UserName",u.getUserName());
-        newUser.put("UserId",u.getUserId());
-        newUser.put("TextStyle",u.getTextStyle());
-        newUser.put("Password",u.getPassword());
-        newUser.put("TextSize",u.getTextSize());
-        newUser.put("PhoneNumber",u.getPhoneNumber());
-        newUser.put("Email",u.getEmail());
-        newUser.put("BackgroundColor",u.getBgColor());
-        newUser.put("RegisterDate",u.getTime());
         db.collection("UserList").document(user.getEmail())
-                .set(newUser)
+                .set(u)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -92,29 +82,20 @@ public class userUnit {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user==null ||  newUInfo==null) return;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        UserItem userItem=null;
 
         DocumentReference docRef = db.collection("UserList").document(user.getEmail());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        docRef.update("bgColor",newUInfo.getBgColor()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Map<String,Object> m = document.getData();
-                        if(newUInfo.getBgColor()!=null){m.put("BackgroundColor",newUInfo.getBgColor());
-                        insert(m,user);
-                        }
-                    } else {
-                        Log.d("error", "No such document");
-                    }
-                } else {
-                    Log.d("error", "get failed with ", task.getException());
-                }
+            public void onSuccess(Void aVoid) {
+
+
+
             }
         });
-    }
 
+
+    }
+/*
     public  void insert(Map<String,Object> m, FirebaseUser user )
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -132,5 +113,5 @@ public class userUnit {
                         Log.w("error", "Error writing document", e);
                     }
                 });
-    }
+    }*/
 }

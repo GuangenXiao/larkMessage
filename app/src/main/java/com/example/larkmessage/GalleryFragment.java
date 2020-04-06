@@ -103,11 +103,11 @@ public class GalleryFragment extends Fragment {
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if(task.isSuccessful())
                                 {
-
-
                                     for(QueryDocumentSnapshot documentSnapshot:task.getResult())
                                     {
-                                        list.add(documentSnapshot.toObject(Moment.class));
+                                        Moment moment =documentSnapshot.toObject(Moment.class);
+                                        moment.setPath(documentSnapshot.getId());
+                                        list.add(moment);
                                     }
                                     Log.w("error", "error moment"+list.size(), task.getException());
                                     Adapter.addAll(list);

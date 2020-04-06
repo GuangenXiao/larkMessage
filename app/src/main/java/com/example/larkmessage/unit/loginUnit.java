@@ -205,7 +205,7 @@ public class loginUnit {
     {
         if(user==null ) return;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        UserItem userItem=null;
+        final UserItem userItem=null;
 
         DocumentReference docRef = db.collection("UserList").document(user.getEmail());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -214,24 +214,10 @@ public class loginUnit {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Map<String,Object> m = document.getData();
+
                         Intent intent = new Intent(activity, MainActivity.class);
-                        try {
-                            UserItem u = new UserItem.Builder(m.get("UserName").toString(),m.get("Email").toString())
-                                    .phoneNumber(m.get("PhoneNumber").toString())
-                                    .password(m.get("Password").toString())
-                                    .userId(m.get("UserId").toString())
-                                    .time(m.get("RegisterDate").toString())
-                                    .bgColor(Integer.parseInt(m.get("BackgroundColor").toString()))
-                                    .textSize(Integer.parseInt(m.get("TextSize").toString()))
-                                    .textStyle(Integer.parseInt(m.get("TextStyle").toString()))
-                                    .Build();
-                            intent.putExtra("userInfo", (Serializable) u);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-
-
+                        UserItem u = document.toObject(UserItem.class);
+                        intent.putExtra("userInfo", (Serializable) u);
                         activity.startActivity(intent);
                         activity.finish();
                     } else {

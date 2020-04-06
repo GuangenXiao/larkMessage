@@ -1,6 +1,8 @@
 package com.example.larkmessage;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -144,6 +146,8 @@ public class MomentActivity extends AppCompatActivity {
                         }
                 );
     }
+
+
     private void uploadMoment(Moment moment) throws ParseException {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("MomentList").document(userItem.getEmail()+":"+ DateUnit.getSystemTimeAndDate())

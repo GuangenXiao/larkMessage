@@ -41,7 +41,7 @@
                 android:layout_weight="5"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                />
 
             <Button
                 android:id="@+id/message_button"
@@ -60,9 +60,9 @@
             android:layout_gravity="center|end"
             app:autoClose="false"
             app:fabColor="@color/colorAccent"
-            app:iconM1="@drawable/nn2"
-            app:iconM2="@drawable/nn3"
-            app:iconM3="@drawable/nn4"
+            app:iconM1="@android:drawable/ic_menu_mylocation"
+            app:iconM2="@android:drawable/ic_menu_crop"
+            app:iconM3="@android:drawable/ic_menu_view"
             app:menuOpenDirection="top_left"
             app:squareFabSize="200" />
 

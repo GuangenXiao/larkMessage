@@ -172,7 +172,8 @@ public class HomeFragment extends Fragment {
                 if(ValidationUnit.checkEmail(friend.getEmail())) {
                     if(friend.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())!=true)
                     {
-                    checkFriend(friend);}
+                    checkExistFriends(friend);
+                    }
                     else {
                         Toast.makeText(getContext(),"don't add yourself! ",Toast.LENGTH_SHORT).show();
                     }
@@ -201,7 +202,7 @@ public class HomeFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
        // check the user exist and call addfriends();
         db.collection("UserList")
-                .whereEqualTo("Email", friend.getEmail())
+                .whereEqualTo("email", friend.getEmail())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -217,8 +218,9 @@ public class HomeFragment extends Fragment {
                                QuerySnapshot snapshot = task.getResult();
                                DocumentSnapshot documentSnapshot =snapshot.getDocuments().get(0);
                                Map<String ,Object> m = documentSnapshot.getData();
-                               friend.setUserName(m.get("UserName").toString());
-                               friend.setIcon(R.drawable.nn8);
+                               friend.setUserName(m.get("userName").toString());
+                               if(m.containsKey("icon"))friend.setIcon(Integer.parseInt(m.get("icon").toString()));
+                               else friend.setIcon(R.drawable.nn7);
                                 CreateChatting(friend);
                             }
 
@@ -227,6 +229,30 @@ public class HomeFragment extends Fragment {
                         }
                     }
                 });
+    }
+    protected void checkExistFriends(final Friend friend)
+    {
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("UserList").document(userItem.getEmail()).collection("FriendList")
+                    .whereEqualTo("email",friend.getEmail())
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            if(queryDocumentSnapshots.isEmpty())
+                            checkFriend(friend);
+                            else {
+                                showAddedDialog();
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
     }
     protected void addFriends(final Friend friend)
     {
@@ -305,7 +331,19 @@ public class HomeFragment extends Fragment {
                     }
                 });
     }
-
+    protected void  showAddedDialog()
+    {
+        final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(getContext());
+        alterDiaglog.setIcon(R.mipmap.ic_launcher);
+        alterDiaglog.setTitle(R.string.added_friends);
+        alterDiaglog.setMessage("You have added your friend");
+        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        alterDiaglog.show();
+    }
     protected void writeData(Message message)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();

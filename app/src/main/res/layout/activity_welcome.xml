@@ -7,8 +7,8 @@
     tools:context=".WelcomeActivity">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -16,8 +16,10 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/textView"
@@ -60,18 +62,19 @@
             android:hint="@string/your_password"
             android:inputType="textPassword" />
 
-        <TextView
-            android:id="@+id/welcome_forget_passwords"
-            android:layout_width="match_parent"
+        <CheckBox
+            android:id="@+id/mem_CheckBox"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:gravity="right"
-            android:text="if you forget your password ,click here!"
-            android:textColor="@color/colorPrimaryDark" />
+            android:layout_marginTop="20dp"
+            android:text="Remember Me" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -91,6 +94,16 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/welcome_forget_passwords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="200dp"
+            android:text="if you forget your password ,click here!"
+            android:textColor="@color/colorPrimaryDark" />
+
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

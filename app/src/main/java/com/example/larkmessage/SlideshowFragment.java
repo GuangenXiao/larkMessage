@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.larkmessage.MainActivity;
 import com.example.larkmessage.R;
 import com.example.larkmessage.unit.loginUnit;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -39,6 +40,13 @@ public class SlideshowFragment extends Fragment {
         loginunit =new loginUnit();
         logoutButton =view.findViewById(R.id.logout_button);
         updateUI(view);
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

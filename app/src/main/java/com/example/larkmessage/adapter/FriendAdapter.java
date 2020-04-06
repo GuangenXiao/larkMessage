@@ -54,7 +54,15 @@ private UserItem userItem;
     }
     @Override
     public void onBindViewHolder(@NonNull FriendViewHolder holder, final int position) {
-        holder.icon.setImageResource(list.get(position).getIcon());
+        if(list.get(position).getIcon()!=null)
+        {
+            try {
+                holder.icon.setImageResource(list.get(position).getIcon());
+            }
+        catch (Exception e)
+        {
+
+        }}
         holder.username.setText(list.get(position).getUserName());
         if(list.get(position).getType()==true)holder.email.setText(list.get(position).getEmail());
         else holder.email.setText("waiting for your response");

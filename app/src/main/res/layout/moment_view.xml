@@ -51,23 +51,40 @@
             android:text="textContent"
             android:textSize="20sp" />
 
+
+
+        <TextView
+            android:id="@+id/agree_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:textSize="28dp"
+            android:layout_below="@+id/moment_context"
+            android:text="1" />
+
         <ImageButton
             android:id="@+id/moment_agree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/moment_context"
-            android:layout_marginLeft="100dp"
-            android:layout_toRightOf="@+id/moment_icon"
+            android:layout_toRightOf="@+id/agree_textView"
             android:src="@android:drawable/checkbox_on_background"></ImageButton>
-
+        <TextView
+            android:id="@+id/disagree_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/moment_context"
+            android:layout_marginLeft="50dp"
+            android:textSize="28dp"
+            android:layout_toRightOf="@+id/moment_agree"
+            android:text="1" />
         <ImageButton
             android:id="@+id/moment_disagree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/moment_context"
-            android:layout_marginLeft="50dp"
-            android:layout_toRightOf="@+id/moment_agree"
-            android:src="@android:drawable/presence_offline"></ImageButton>
+            android:layout_toRightOf="@+id/disagree_textView"
+            android:src="@android:drawable/checkbox_off_background"></ImageButton>
 
     </RelativeLayout>
 

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.larkmessage.entity.Message;
 import com.example.larkmessage.entity.Moment;
 import com.example.larkmessage.entity.UserItem;
 import com.firebase.ui.auth.data.model.User;
@@ -72,6 +73,65 @@ public class fileUnit {
         });
 
 
+    }
+
+    public  void  upLoadMessageImage(Uri path, Activity activity, UserItem userItem)
+    {
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://larkmessage.appspot.com");
+        file = path;//Uri.fromFile(new File(path));
+        StorageReference storageRef = storage.getReference();
+// Create the file metadata
+        metadata = new StorageMetadata.Builder()
+                .setContentType("image/jpeg")
+                .build();
+
+// Upload file and metadata to the path 'images/mountains.jpg'
+        uploadTask = storageRef.child("Message/"+userItem.getEmail()+":"+file.getLastPathSegment()).putFile(file, metadata);
+
+// Listen for state changes, errors, and completion of the upload.
+        uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                System.out.println("Upload is " + progress + "% done");
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // Handle successful uploads on complete
+                // ...
+                // taskSnapshot
+                file.getLastPathSegment();
+            }
+        });
+
+
+    }
+    public void downloadMessageImage(Message message, final ImageView imageView) throws IOException {
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://larkmessage.appspot.com");
+        StorageReference storageRef = storage.getReference();
+        StorageReference Ref = storageRef.child("Moment/"+message.getImageResource());
+
+        final File localFile = File.createTempFile(message.getImageResource(), "jpg");
+        Ref.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                // Local temp file has been created
+                Bitmap bitmap= BitmapFactory.decodeFile(localFile.getPath());
+                imageView.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
     }
     public void downloadImage(Moment moment, final ImageView imageView) throws IOException {
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://larkmessage.appspot.com");

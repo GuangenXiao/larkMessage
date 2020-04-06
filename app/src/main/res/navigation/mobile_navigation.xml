@@ -25,6 +25,6 @@
     <fragment
         android:id="@+id/nav_setting"
         android:name="com.example.larkmessage.nav_setting"
-        android:label="fragment_nav_setting"
+        android:label="@string/action_settings"
         tools:layout="@layout/fragment_nav_setting" />
 </navigation>

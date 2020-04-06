@@ -1,11 +1,19 @@
 package com.example.larkmessage;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
@@ -101,11 +109,29 @@ public class MainActivity extends AppCompatActivity {
 
             navNameTextView.setText(userItem.getUserName());
             navMailTextView.setText(user.getEmail());
-            navIconImageView.setImageResource(R.drawable.nn1);
+            navIconImageView.setImageResource(userItem.getIcon());
         }
 
 
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            startActivity(new Intent( Settings.ACTION_LOCALE_SETTINGS));
+            return true;
+        }
+
+        return super.onOptionsItemSelected( item );
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -142,4 +168,44 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }*/
     }
+
+    //waiting list
+/*
+    public static void showChannel1Notification(Context context, PlanningItem anItem, int i) {
+       int notificationId = 0x1234;
+        Notification.Builder builder = new Notification.Builder(context,"1"); //与channelId对应
+        //icon title text必须包含，不然影响桌面图标小红点的展示
+        builder.setSmallIcon(android.R.drawable.stat_notify_chat)
+                .setContentTitle("xxx")
+                .setContentText("xxx")
+                .setNumber(8); //久按桌面图标时允许的此条通知的数量
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(notificationId, builder.build());
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(PUSH_CHANNEL_ID, PUSH_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        Intent notificationIntent = new Intent(context, PlanningActivity.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+        builder.setContentTitle(anItem.getTitle())//设置通知栏标题
+                .setContentIntent(pendingIntent) //设置通知栏点击意图
+                //.setContentText(anItem.getNote())
+                .setNumber(++pushNum)
+                .setTicker(anItem.getNote()) //通知首次出现在通知栏，带上升动画效果的
+                .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
+                .setSmallIcon(R.mipmap.ic_launcher)//设置通知小ICON
+                .setChannelId(PUSH_CHANNEL_ID)
+                .setDefaults(Notification.DEFAULT_ALL);
+
+        Notification notification = builder.build();
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        if (notificationManager != null) {
+            notificationManager.notify(i, notification);
+        }
+    }*/
 }

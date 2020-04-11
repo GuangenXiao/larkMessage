@@ -99,12 +99,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(ValidationUnit.checkEmail(email)==false)
                 {
-                    Toast.makeText(RegisterActivity.this, "Invalued email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, R.string.invalided_email, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(ValidationUnit.isMobileNO(phone)==false)
                 {
-                    Toast.makeText(RegisterActivity.this, "Invalued email phone number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, R.string.invalided_email_phone, Toast.LENGTH_SHORT).show();
                     return;
                 }
                if(name.length()>0&&email.length()>0&&password.length()>0&&phone.length()>0) {
@@ -117,7 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                else
                {
-                   Toast.makeText(RegisterActivity.this, "need more info", Toast.LENGTH_SHORT).show();
+                   Toast.makeText(RegisterActivity.this, R.string.need_more_info, Toast.LENGTH_SHORT).show();
                }
             }
         });
@@ -129,7 +129,7 @@ public class RegisterActivity extends AppCompatActivity {
     {
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(this);
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
-        alterDiaglog.setTitle("Choose Your Icon");
+        alterDiaglog.setTitle(R.string.choose_your_icon);
         //recyclerView = getView().findViewById(R.id.icon_recycler);
         recyclerView = new RecyclerView(this);
         if(recyclerView==null)return;
@@ -140,13 +140,13 @@ public class RegisterActivity extends AppCompatActivity {
         recyclerView.setAdapter(Adapter);
         Adapter.addAll(new IconDB().getList());
         alterDiaglog.setView(recyclerView);
-        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        alterDiaglog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
             }
         });
-        alterDiaglog.setPositiveButton("accept", new DialogInterface.OnClickListener() {
+        alterDiaglog.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                icon= Adapter.getChoosedIcon();

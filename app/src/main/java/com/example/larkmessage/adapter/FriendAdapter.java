@@ -1,5 +1,6 @@
 package com.example.larkmessage.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -57,6 +58,7 @@ private ArrayList<String> onlineList = new ArrayList<>();
         mRecyclerView =recyclerView;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final FriendViewHolder holder, final int position) {
         if(iconDB.containKey(list.get(position).getIcon()))
@@ -84,7 +86,7 @@ private ArrayList<String> onlineList = new ArrayList<>();
 
         }
         if(list.get(position).getType()==true)holder.email.setText(list.get(position).getEmail());
-        else holder.email.setText("waiting for your response");
+        else holder.email.setText(R.string.waiting_for_your_resopone);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,14 +106,14 @@ private ArrayList<String> onlineList = new ArrayList<>();
     {
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(context);
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
-        alterDiaglog.setTitle("Are you sure to delete your friends?");
-        alterDiaglog.setMessage("this option can't be cancelled.");
-        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        alterDiaglog.setTitle(R.string.question_delete_friend);
+        alterDiaglog.setMessage(R.string.opotion_cant_cancel_warning);
+        alterDiaglog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
         });
-        alterDiaglog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        alterDiaglog.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 refuseFriends(list.get(position ));
@@ -155,8 +157,8 @@ private ArrayList<String> onlineList = new ArrayList<>();
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(context);
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
         alterDiaglog.setTitle(R.string.friend_dialog);
-        alterDiaglog.setMessage("Waiting for friend's responds");
-        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        alterDiaglog.setMessage(R.string.waiting_for_friend_respone);
+        alterDiaglog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }

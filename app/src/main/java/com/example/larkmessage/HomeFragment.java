@@ -198,15 +198,15 @@ public class HomeFragment extends Fragment {
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(getContext());
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
         alterDiaglog.setTitle(R.string.friend_dialog);
-        alterDiaglog.setMessage("Please Input your friend email:");
+        alterDiaglog.setMessage(R.string.please_input_your_friendemail);
         et=new EditText(getActivity());
         et.setSingleLine();
-        et.setHint("email address");
+        et.setHint(R.string.email_address);
         alterDiaglog.setView(et);
-        alterDiaglog.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+        alterDiaglog.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(),"Click Add",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.click_add,Toast.LENGTH_SHORT).show();
                 friend =new Friend();
                 friend.setEmail(et.getText().toString());
                 try {
@@ -220,23 +220,23 @@ public class HomeFragment extends Fragment {
                     checkExistFriends(friend);
                     }
                     else {
-                        Toast.makeText(getContext(),"don't add yourself! ",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.dont_add_yourself,Toast.LENGTH_SHORT).show();
                     }
                 }
-                else Toast.makeText(getContext(),"input is empty",Toast.LENGTH_SHORT).show();
+                else Toast.makeText(getContext(), R.string.input_is_empty,Toast.LENGTH_SHORT).show();
             }
         });
-        alterDiaglog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+        alterDiaglog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(),"Click Cancel",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.click_cancel,Toast.LENGTH_SHORT).show();
 
             }
         });
-        alterDiaglog.setNeutralButton("CONTINUE", new DialogInterface.OnClickListener() {
+        alterDiaglog.setNeutralButton(R.string.moment_continue, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(),"Click Continue",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.click_continue,Toast.LENGTH_SHORT).show();
             }
         });
         alterDiaglog.show();
@@ -255,7 +255,7 @@ public class HomeFragment extends Fragment {
                         if (task.isSuccessful()) {
                             if(task.getResult().isEmpty())
                             {
-                                Toast.makeText(getContext(),"InValued User",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.invaluesd_user,Toast.LENGTH_SHORT).show();
 
                             }
                             else
@@ -270,7 +270,7 @@ public class HomeFragment extends Fragment {
                             }
 
                         } else {
-                            Toast.makeText(getContext()," internet error",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.internet_error,Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -384,8 +384,8 @@ public class HomeFragment extends Fragment {
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(getContext());
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
         alterDiaglog.setTitle(R.string.added_friends);
-        alterDiaglog.setMessage("You have added your friend");
-        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        alterDiaglog.setMessage(R.string.you_have_added);
+        alterDiaglog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }

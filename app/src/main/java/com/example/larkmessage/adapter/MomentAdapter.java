@@ -138,9 +138,9 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.MomentHold
     {
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(context);
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
-        alterDiaglog.setTitle("Who agree with you?");
+        alterDiaglog.setTitle(R.string.who_like_moment);
         alterDiaglog.setMessage(moment.getAgree().toString());
-        alterDiaglog.setNeutralButton("Continue", new DialogInterface.OnClickListener() {
+        alterDiaglog.setNeutralButton(R.string.moment_continue, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
@@ -151,9 +151,9 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.MomentHold
     {
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(context);
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
-        alterDiaglog.setTitle("Who disagree with you?");
+        alterDiaglog.setTitle(R.string.who_dislike_this_moment);
         alterDiaglog.setMessage(moment.getDisagree().toString());
-        alterDiaglog.setNeutralButton("Continue", new DialogInterface.OnClickListener() {
+        alterDiaglog.setNeutralButton(R.string.moment_continue, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
@@ -164,14 +164,14 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.MomentHold
     {
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(context);
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
-        alterDiaglog.setTitle("Delete this Moment");
-        alterDiaglog.setMessage("Are you sure to delete this moment?");
-        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        alterDiaglog.setTitle(R.string.delete_this_moment);
+        alterDiaglog.setMessage(R.string.makesure_delete_moment);
+        alterDiaglog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
         });
-        alterDiaglog.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+        alterDiaglog.setPositiveButton(R.string.Remove, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deleteMoment(moment);
@@ -183,14 +183,14 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.MomentHold
     {
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(context);
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
-        alterDiaglog.setTitle("Delete this Moment");
-        alterDiaglog.setMessage("you are not the sender of the moment,are you sure to ignore this moment? If you do that , you will not see this moment forever!");
-        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        alterDiaglog.setTitle(R.string.delete_this_moment);
+        alterDiaglog.setMessage(R.string.ignore_moment);
+        alterDiaglog.setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
         });
-        alterDiaglog.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+        alterDiaglog.setPositiveButton(R.string.Remove, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                ArrayList<String> newUserList = moment.getUserList();

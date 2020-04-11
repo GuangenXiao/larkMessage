@@ -70,7 +70,7 @@ public class MomentActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
-            actionBar.setTitle("Create a moment now?");
+            actionBar.setTitle(R.string.creat_a_moment);
         }
         requestStoragePermission();
         Intent intent =getIntent();

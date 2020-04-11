@@ -121,7 +121,7 @@ public class nav_setting extends Fragment {
     {
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(getContext());
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
-        alterDiaglog.setTitle("Choose Your Icon");
+        alterDiaglog.setTitle(R.string.choose_your_icon);
         //recyclerView = getView().findViewById(R.id.icon_recycler);
         recyclerView = new RecyclerView(getContext());
         if(recyclerView==null)return;
@@ -132,12 +132,12 @@ public class nav_setting extends Fragment {
         recyclerView.setAdapter(Adapter);
         Adapter.addAll(new IconDB().getList());
         alterDiaglog.setView(recyclerView);
-        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        alterDiaglog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
         });
-        alterDiaglog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        alterDiaglog.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
@@ -147,7 +147,7 @@ public class nav_setting extends Fragment {
     protected void showColorDialog() {
         ColorPickerDialogBuilder
                 .with(getActivity())
-                .setTitle("Choose color")
+                .setTitle(getString(R.string.choose_color))
                 .initialColor(mCurrentBackgroundColor)
                 .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
                 .density(12)
@@ -157,7 +157,7 @@ public class nav_setting extends Fragment {
                         //Toast("onColorSelected: 0x" + Integer.toHexString(selectedColor));
                     }
                 })
-                .setPositiveButton("ok", new ColorPickerClickListener() {
+                .setPositiveButton(getString(R.string.ok), new ColorPickerClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
                         // changeBackgroundColor(selectedColor);
@@ -171,7 +171,7 @@ public class nav_setting extends Fragment {
                         new userUnit().changeUserInfo(u);
                     }
                 })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }

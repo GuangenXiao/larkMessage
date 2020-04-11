@@ -169,11 +169,11 @@ public class MessageActivity extends AppCompatActivity {
                             }
                             else if(status ==true)
                             {
-                                result="(Online)";
+                                result=getString(R.string.online);
                             }
                             else
                             {
-                                result="(Offline)";
+                                result=getString(R.string.offline);
                             }
                         }
                         else
@@ -307,16 +307,16 @@ public class MessageActivity extends AppCompatActivity {
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(this);
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
         alterDiaglog.setTitle(R.string.friend_dialog);
-        alterDiaglog.setMessage("Do you want to accept the invitation from "+friend.getUserName()+"?");
+        alterDiaglog.setMessage(getString(R.string.do_you_want_to_accept)+friend.getUserName()+"?");
 
-        alterDiaglog.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+        alterDiaglog.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(MessageActivity.this, "Click Add", Toast.LENGTH_SHORT).show();
                 addFriends(friend);
             }
         });
-        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        alterDiaglog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(MessageActivity.this,"Click Continue",Toast.LENGTH_SHORT).show();

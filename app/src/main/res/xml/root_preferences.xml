@@ -13,14 +13,14 @@
 
         <SwitchPreferenceCompat
             app:key="friend"
-            app:title="Friend Relationship" />
+            app:title="@string/friend_relationship" />
 
         <SwitchPreferenceCompat
             app:dependency="friend"
             app:key="moment"
-            app:summaryOff="refuse him watch your moment"
-            app:summaryOn="accept him watch your moment"
-            app:title="Moment permit" />
+            app:summaryOff="@string/refuse_watch_moment"
+            app:summaryOn="@string/accept_watch_moment"
+            app:title="@string/moment_permit" />
 
     </PreferenceCategory>
 

@@ -86,14 +86,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     {
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(context);
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
-        alterDiaglog.setTitle("Delete this Moment");
-        alterDiaglog.setMessage("Are you sure to delete this message?");
-        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        alterDiaglog.setTitle(R.string.delete_this_moment);
+        alterDiaglog.setMessage(R.string.make_sure_delete_message);
+        alterDiaglog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
         });
-        alterDiaglog.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+        alterDiaglog.setPositiveButton(R.string.Remove, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deleteMessage(message);
@@ -105,9 +105,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     {
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(context);
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
-        alterDiaglog.setTitle("Delete this Message");
-        alterDiaglog.setMessage("Only the sender can delete message!");
-        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        alterDiaglog.setTitle(R.string.delete_this_message);
+        alterDiaglog.setMessage(R.string.only_sender_can_delete_message);
+        alterDiaglog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }

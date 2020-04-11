@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -125,14 +126,15 @@ public class WelcomeActivity extends AppCompatActivity {
       });
     }
 
+    @SuppressLint("SetTextI18n")
     protected void forgetDialog()
     {
         final EditText emailEdit = new EditText(WelcomeActivity.this);
         final EditText phoneEdit = new EditText(WelcomeActivity.this);
         TextView emailText =new TextView(WelcomeActivity.this);
-        emailText.setText("Email:");
+        emailText.setText(R.string.email_);
         TextView phoneText = new TextView(WelcomeActivity.this);
-        phoneText.setText("Phone Number:");
+        phoneText.setText(R.string.phone_number_);
         LinearLayout linearLayout = new LinearLayout(WelcomeActivity.this);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.addView(emailText);
@@ -141,15 +143,15 @@ public class WelcomeActivity extends AppCompatActivity {
         linearLayout.addView(phoneEdit);
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(WelcomeActivity.this);
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
-        alterDiaglog.setTitle("Forget password");
-        alterDiaglog.setMessage("Please input your email and phone Number:");
+        alterDiaglog.setTitle(R.string.forget_password);
+        alterDiaglog.setMessage(R.string.please_input_your_email);
         alterDiaglog.setView(linearLayout);
-        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        alterDiaglog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
         });
-        alterDiaglog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        alterDiaglog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 searchByEmail(emailEdit.getText().toString(),phoneEdit.getText().toString());
@@ -168,18 +170,18 @@ public class WelcomeActivity extends AppCompatActivity {
                         if(documentSnapshot.exists()) {
                             UserItem userItem = documentSnapshot.toObject(UserItem.class);
                             if (userItem.getPhoneNumber().equals(fPhone)) {
-                                String result = "your password :" + userItem.getPassword();
+                                String result = getString(R.string.your_password_) + userItem.getPassword();
                                 welEMailEditView.setText(userItem.getEmail());
                                 welPasswordEditView.setText(userItem.getPassword());
                                 passwordDialog(result);
                             } else {
-                                String result = "incorrect phone number";
+                                String result = getString(R.string.incorrect_phone_number);
                                 passwordDialog(result);
                             }
                         }
                         else
                         {
-                            String result = "incorrect email";
+                            String result = getString(R.string.incorrect_email);
                             passwordDialog(result);
                         }
                     }
@@ -187,7 +189,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        String result = "no internet!";
+                        String result = getString(R.string.no_internet);
                         passwordDialog(result);
                     }
                 });
@@ -197,14 +199,14 @@ public class WelcomeActivity extends AppCompatActivity {
 
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(WelcomeActivity.this);
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
-        alterDiaglog.setTitle("Result:");
+        alterDiaglog.setTitle(R.string.result_);
         alterDiaglog.setMessage(result);
-        alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        alterDiaglog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
         });
-        alterDiaglog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        alterDiaglog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 

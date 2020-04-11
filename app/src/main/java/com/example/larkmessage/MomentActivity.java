@@ -103,10 +103,11 @@ public class MomentActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        new fileUnit().upLoadImage(uri, this, userItem);
+
         moment.setIcon(userItem.getIcon());
         moment.setText(context.getText().toString());
         moment.setImage(userItem.getEmail()+":"+uri.getLastPathSegment());
+        moment.setFinish(false);
         moment.setUserName(userItem.getUserName());
         checkAccessList(moment);
     }
@@ -116,7 +117,9 @@ public class MomentActivity extends AppCompatActivity {
         userlist.add(userItem.getEmail());
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("UserList").document(userItem.getEmail()).collection("FriendList").whereEqualTo("letHimAccessMoment",true)
+        db.collection("UserList").document(userItem.getEmail()).collection("FriendList")
+                .whereEqualTo("letHimAccessMoment",true)
+                .whereEqualTo("type",true)
                 .get()
                 .addOnCompleteListener(
                         new OnCompleteListener<QuerySnapshot>() {
@@ -133,6 +136,8 @@ public class MomentActivity extends AppCompatActivity {
 
                                     moment.setUserList(userlist);
                                     try {
+                                       path= userItem.getEmail()+":"+ DateUnit.getSystemTimeAndDate();
+                                       moment.setPath(path);
                                         uploadMoment(moment);
                                     } catch (ParseException e) {
                                         e.printStackTrace();
@@ -148,13 +153,14 @@ public class MomentActivity extends AppCompatActivity {
     }
 
 
-    private void uploadMoment(Moment moment) throws ParseException {
+    private void uploadMoment(final Moment moment) throws ParseException {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("MomentList").document(userItem.getEmail()+":"+ DateUnit.getSystemTimeAndDate())
+        db.collection("MomentList").document(moment.getPath())
                 .set(moment)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        new fileUnit().upLoadImage(uri, MomentActivity.this, userItem,moment);
                         finish();
                     }
                 })

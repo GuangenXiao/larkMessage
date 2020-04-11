@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,10 +22,12 @@ import com.example.larkmessage.entity.Friend;
 import com.example.larkmessage.entity.Message;
 import com.example.larkmessage.entity.Moment;
 import com.example.larkmessage.entity.UserItem;
+import com.example.larkmessage.unit.fileUnit;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,11 +65,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 return new MessageViewHolder(viewOne);
 
     }
-
     protected  void deleteMessage(Message message)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Chatting").document(friend.getMessageId()).collection("MessageList").document(message.getUsername()+message.getTime())
+        db.collection("Chatting").document(friend.getMessageId()).collection("MessageList").document(message.getPath())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -80,7 +82,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                     }
                 });
     }
-
     protected void  showDeleteDialog(final Message message)
     {
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(context);
@@ -104,7 +105,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     {
         final AlertDialog.Builder alterDiaglog = new AlertDialog.Builder(context);
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
-        alterDiaglog.setTitle("Delete this Moment");
+        alterDiaglog.setTitle("Delete this Message");
         alterDiaglog.setMessage("Only the sender can delete message!");
         alterDiaglog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -121,7 +122,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         if(list.get(position).getTime().length()>20)holder.time.setText(list.get(position).getTime().substring(0, 20));
         else holder.time.setText(list.get(position).getTime());
         holder.username.setText(list.get(position).getUsername());
-
+        if(list.get(position).getImageResource()!=null) {
+            try {
+                new fileUnit().downloadMessageImage(list.get(position),holder.image);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            holder.image.setImageDrawable(null);
+        }
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -143,8 +154,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     public void addAll(List<Message> massageItemList)
     {
+        list=null;
         list = massageItemList;
         notifyDataSetChanged();
+    }
+    public void addItem()
+    {
+        //mNames.add(0,getRandomName());
+        //notifyDataSetChanged();
+        notifyItemInserted(0);
+        // notifyItemRangeChanged(0,mNames.size());
+        //mRecycleView.getLayoutManager().scrollToPosition(0);
+
     }
     @Override
     public int getItemCount() {
@@ -157,12 +178,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         private  TextView context;
         private  TextView time;
         private CardView cardView;
+        private ImageView image;
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.Message_CardView);
             username = itemView.findViewById(R.id.message_user);
             context =itemView.findViewById(R.id.message_context);
             time  =itemView.findViewById(R.id.message_date);
+            image = itemView.findViewById(R.id.message_image);
         }
 
     }

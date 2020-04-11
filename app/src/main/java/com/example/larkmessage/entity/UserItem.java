@@ -7,6 +7,7 @@ import android.os.Build;
 
 import com.example.larkmessage.R;
 import com.example.larkmessage.unit.DateUnit;
+import com.example.larkmessage.unit.IconDB;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -22,6 +23,7 @@ public class UserItem implements Serializable {
     private String phoneNumber=null;
     private String email=null;
     private String time=null;
+    private Boolean status =false;
     private final   String FriendListKey="friendList";
     private final   String MomentListKey="MomentList";
 
@@ -57,7 +59,7 @@ public class UserItem implements Serializable {
         private Integer textStyle= Typeface.SANS_SERIF.getStyle();
         private Integer bgColor= -4423;
         private String phoneNumber=null;
-        private Integer icon= R.drawable.nn2;
+        private Integer icon= new IconDB().getDefaultIcon();
         private String email=null;
         protected DateUnit dateUnit =new DateUnit();
         private String time=DateUnit.getSystemTimeAndDate();
@@ -190,5 +192,13 @@ public class UserItem implements Serializable {
 
     public void setIcon(Integer icon) {
         this.icon = icon;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

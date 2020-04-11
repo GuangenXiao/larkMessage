@@ -68,6 +68,8 @@ public class HomeFragment extends Fragment {
     private  EditText et;
     private FriendAdapter friendAdapter;
     private RecyclerView recyclerView;
+    ArrayList<String> onlineList = new ArrayList<String>();
+    ArrayList<Friend> list = null;
     public HomeFragment() {
     }
 
@@ -85,7 +87,6 @@ public class HomeFragment extends Fragment {
         userItem =((MainActivity)getActivity()).getUserItem();
         if(userItem.getBgColor()!=null)
         view.setBackgroundColor(((MainActivity)getActivity()).getUserItem().getBgColor());
-
         FloatingActionButton fab = getActivity().findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,10 +100,53 @@ public class HomeFragment extends Fragment {
         friendAdapter =new FriendAdapter(getActivity(),userItem);
         recyclerView.setAdapter(friendAdapter);
         ListenFriends();
+        //listentoOnline();
     }
+/*
+    public void listentoOnline()
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("RecordInfo").document("OnlineRecord")
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        getOnline();
+                    }
+                });
+    }
+
+    public void getOnline()
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("RecordInfo").document("OnlineRecord")
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                onlineList = (ArrayList<String>) documentSnapshot.getData().get("OnlineList");
+                Toast.makeText(getContext(), onlineList.toString(), Toast.LENGTH_SHORT).show();
+                upDateStatus();
+            }
+        });
+    }
+    public void upDateStatus()
+    {
+        if(list==null)return;
+        for(Friend item:list)
+        {
+            if(onlineList.contains(item.getEmail()))
+            {
+                item.setStatus(true);
+            }
+            else
+            {
+                item.setStatus(false);
+            }
+        }
+        friendAdapter.addAll(list);
+    }*/
     public void upDate()
     {
-        final List<Friend>  list =new ArrayList<Friend>();
+        list =new ArrayList<Friend>();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("UserList").document(userItem.getEmail()).collection("FriendList")
@@ -120,6 +164,7 @@ public class HomeFragment extends Fragment {
 
                                     }
                                     friendAdapter.addAll(list);
+                                    //getOnline();
                                 }
                                 else
                                 {
@@ -258,6 +303,7 @@ public class HomeFragment extends Fragment {
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         friend.setType(true);
+        friend.setStatus(false);
         db.collection("UserList").document(userItem.getEmail()).collection("FriendList").document(friend.getEmail())
                 .set(friend)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -287,6 +333,8 @@ public class HomeFragment extends Fragment {
         yourself.setIcon(userItem.getIcon());
         yourself.setUserName(userItem.getUserName());
         yourself.setMessageId(friend.getMessageId());
+        yourself.setLetHimAccessMoment(false);
+        yourself.setStatus(false);
         yourself.setType(false);
         db.collection("UserList").document(friend.getEmail()).collection("FriendList").document(userItem.getEmail())
                 .set(yourself)
@@ -398,4 +446,5 @@ public class HomeFragment extends Fragment {
         // adapter = new MassageAdapter(this,list);
         //recyclerView.setAdapter(adapter);
     }
+
 }

@@ -17,6 +17,7 @@ public class Moment {
     private ArrayList<String> agree;
     private ArrayList<String> disagree;
     private ArrayList<String> userList;
+    private Boolean finish=false;
     public void setDefault() throws ParseException {
         agree=new ArrayList<String>();
         disagree=new ArrayList<String>();
@@ -93,5 +94,13 @@ public class Moment {
 
     public void setUserList(ArrayList<String> userList) {
         this.userList = userList;
+    }
+
+    public Boolean getFinish() {
+        return finish;
+    }
+
+    public void setFinish(Boolean finish) {
+        this.finish = finish;
     }
 }

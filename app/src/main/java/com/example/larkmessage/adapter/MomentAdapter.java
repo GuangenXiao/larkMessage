@@ -23,6 +23,7 @@ import com.example.larkmessage.R;
 import com.example.larkmessage.entity.Friend;
 import com.example.larkmessage.entity.Moment;
 import com.example.larkmessage.entity.UserItem;
+import com.example.larkmessage.unit.IconDB;
 import com.example.larkmessage.unit.fileUnit;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +39,7 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.MomentHold
     private Context context;
     private RecyclerView mRecyclerView;
     private UserItem userItem;
+    private IconDB iconDB = new IconDB();
 
     public MomentAdapter(Context context, UserItem userItem)
     {
@@ -204,7 +206,19 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.MomentHold
     public void onBindViewHolder(@NonNull MomentHolder holder, final int position) {
         holder.userName .setText(list.get(position).getUserName());
         holder.context.setText(list.get(position).getText());
-        holder.icon.setImageResource(list.get(position).getIcon());
+
+        if(iconDB.containKey(userItem.getIcon()))
+        {
+            holder.icon.setImageResource(iconDB.getIconID(userItem.getIcon()));
+        }
+        else if(iconDB.containValue(userItem.getIcon()))
+        {
+            holder.icon.setImageResource(userItem.getIcon());
+        }
+        else
+        {
+            holder.icon.setImageResource(iconDB.getDefaultIcon());
+        }
         final Integer agree = list.get(position).getAgree().size();
         final Integer disagree = list.get(position).getDisagree().size();
         holder.agreeText.setText(agree.toString());

@@ -12,12 +12,16 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.larkmessage.MessageActivity;
+import com.example.larkmessage.MomentActivity;
+import com.example.larkmessage.entity.Friend;
 import com.example.larkmessage.entity.Message;
 import com.example.larkmessage.entity.Moment;
 import com.example.larkmessage.entity.UserItem;
 import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.CancellableTask;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,7 +40,7 @@ public class fileUnit {
     private  StorageMetadata metadata;
     private CancellableTask uploadTask;
 
-    public  void  upLoadImage(Uri path, Activity activity, UserItem userItem)
+    public  void  upLoadImage(Uri path, Activity activity, UserItem userItem, final Moment moment)
     {
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://larkmessage.appspot.com");
         file = path;//Uri.fromFile(new File(path));
@@ -68,14 +72,55 @@ public class fileUnit {
                 // Handle successful uploads on complete
                 // ...
                // taskSnapshot
-                file.getLastPathSegment();
+                updateStatues(moment);
             }
         });
 
 
     }
+    public void  updateStatues(Moment moment)
+    {
+        moment.setFinish(true);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("MomentList").document(moment.getPath())
+                .update("finish",moment.getFinish())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
 
-    public  void  upLoadMessageImage(Uri path, Activity activity, UserItem userItem)
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+    public void  updateStatues(Message message,Friend friend)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        message.setStatus(true);
+        db.collection("Chatting").document(friend.getMessageId()).collection("MessageList").document(message.getPath())
+                .update("status",message.getStatus())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+
+
+
+
+
+    public  void  upLoadMessageImage(Uri path, Activity activity, UserItem userItem,  final Message message,final Friend friend)
     {
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://larkmessage.appspot.com");
         file = path;//Uri.fromFile(new File(path));
@@ -107,7 +152,7 @@ public class fileUnit {
                 // Handle successful uploads on complete
                 // ...
                 // taskSnapshot
-                file.getLastPathSegment();
+                updateStatues(message,friend);
             }
         });
 
@@ -116,7 +161,7 @@ public class fileUnit {
     public void downloadMessageImage(Message message, final ImageView imageView) throws IOException {
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://larkmessage.appspot.com");
         StorageReference storageRef = storage.getReference();
-        StorageReference Ref = storageRef.child("Moment/"+message.getImageResource());
+        StorageReference Ref = storageRef.child("Message/"+message.getImageResource());
 
         final File localFile = File.createTempFile(message.getImageResource(), "jpg");
         Ref.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {

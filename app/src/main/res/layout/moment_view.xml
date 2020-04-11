@@ -37,7 +37,8 @@
             android:id="@+id/moment_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="100dp"
+            android:adjustViewBounds="true"
+            android:maxHeight="200dp"
             android:layout_below="@+id/moment_icon"
             app:srcCompat="@android:drawable/ic_menu_gallery">
 

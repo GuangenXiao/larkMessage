@@ -15,7 +15,8 @@ public class Friend implements Serializable {
     String userName;
     Integer icon;
     String messageId;
-
+    String nickName=null;
+    Boolean status;
     public String getMessageId() {
         return messageId;
     }
@@ -87,5 +88,21 @@ public class Friend implements Serializable {
         this.letHimAccessMoment=true;
         this.type=true;
         this.icon = R.drawable.nn2;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

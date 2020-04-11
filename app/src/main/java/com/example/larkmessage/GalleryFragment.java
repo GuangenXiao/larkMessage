@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -83,6 +84,7 @@ public class GalleryFragment extends Fragment {
         });
         recyclerView = view.findViewById(R.id.moment_recycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         recyclerView.setHasFixedSize(true);
         Adapter =new MomentAdapter(getActivity(),userItem);
         recyclerView.setAdapter(Adapter);
@@ -94,6 +96,7 @@ public class GalleryFragment extends Fragment {
         final ArrayList<Moment> list =new ArrayList<Moment>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("MomentList")
+                .whereEqualTo("finish",true)
                 .whereArrayContains("userList",userItem.getEmail())
                 .get()
                 .addOnCompleteListener(
@@ -125,6 +128,7 @@ public class GalleryFragment extends Fragment {
     {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             Query query =db.collection("MomentList")
+                    .whereEqualTo("finish",true)
                     .whereArrayContains("userList",userItem.getEmail());
 
             query.addSnapshotListener(new EventListener<QuerySnapshot>() {

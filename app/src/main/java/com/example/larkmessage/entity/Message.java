@@ -7,11 +7,12 @@ import java.text.ParseException;
 public class Message {
 
     String username;
+    String path;
     String context;
     String time;
     String receiver;
     String ImageResource;
-
+    Boolean status =false;
     public String getImageResource() {
         return ImageResource;
     }
@@ -35,6 +36,7 @@ public class Message {
         this.receiver =receiver;
         this.context = context;
         this.time =null;
+        status =false;
         try {
             this.time = DateUnit.getSystemTimeAndDate();
         } catch (ParseException e) {
@@ -73,5 +75,21 @@ public class Message {
 
     public void setReceiver(String receiver) {
         this.receiver = receiver;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

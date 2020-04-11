@@ -1,9 +1,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/friendSetting_Icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"></ImageView>
+        <TextView
+            android:id="@+id/friendSetting_Name"
+            android:layout_width="match_parent"
+            android:layout_toRightOf="@id/friendSetting_Icon"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"></TextView>
+        <TextView
+            android:id="@+id/friendSetting_Email"
+            android:layout_width="match_parent"
+            android:layout_toRightOf="@id/friendSetting_Icon"
+            android:layout_below="@id/friendSetting_Name"
+            android:textSize="20dp"
+            android:layout_height="wrap_content"></TextView>
+
+    </RelativeLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="20dp"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="RelationDate:"
+        android:layout_weight="2"
+        ></TextView>
+    <TextView
+        android:id="@+id/friendSetting_Date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_weight="1"
+        android:text="date"></TextView>
+</LinearLayout>
 
     <FrameLayout
         android:id="@+id/settings"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/friendSetting_Button"
+        android:layout_marginVertical="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_gravity="right|end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/accept"></Button>
+
+
 </LinearLayout>

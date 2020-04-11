@@ -7,7 +7,7 @@ public class ValidationUnit {
     public static boolean isMobileNO(  String mobiles){
         boolean flag = false;
         try{
-            Pattern regex = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(17[0-9])|(18[0,5-9]))\\d{8}$");
+            Pattern regex = Pattern.compile("^[019][0-9]{5,18}$");
             Matcher m = regex .matcher(mobiles);
             flag = m.matches();
         }catch(Exception e){

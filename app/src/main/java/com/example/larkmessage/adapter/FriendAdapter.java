@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -19,12 +20,14 @@ import com.example.larkmessage.MessageActivity;
 import com.example.larkmessage.R;
 import com.example.larkmessage.entity.Friend;
 import com.example.larkmessage.entity.UserItem;
+import com.example.larkmessage.unit.IconDB;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static androidx.core.content.ContextCompat.startActivity;
@@ -34,7 +37,8 @@ private static List<Friend> list = new ArrayList<Friend>();
 private Context context;
 private RecyclerView mRecyclerView;
 private UserItem userItem;
-
+private IconDB iconDB =new IconDB();
+private ArrayList<String> onlineList = new ArrayList<>();
     public FriendAdapter(Context context ,UserItem userItem) {
         this.context =context;
         this.userItem=userItem;
@@ -52,23 +56,39 @@ private UserItem userItem;
         super.onAttachedToRecyclerView(recyclerView);
         mRecyclerView =recyclerView;
     }
+
     @Override
-    public void onBindViewHolder(@NonNull FriendViewHolder holder, final int position) {
-        if(list.get(position).getIcon()!=null)
+    public void onBindViewHolder(@NonNull final FriendViewHolder holder, final int position) {
+        if(iconDB.containKey(list.get(position).getIcon()))
         {
-            try {
-                holder.icon.setImageResource(list.get(position).getIcon());
-            }
-        catch (Exception e)
+            holder.icon.setImageResource(iconDB.getIconID(list.get(position).getIcon()));
+        }
+        else if(iconDB.containValue(list.get(position).getIcon()))
+        {
+            holder.icon.setImageResource(list.get(position).getIcon());
+        }
+        else
+        {
+            holder.icon.setImageResource(iconDB.getIconID(iconDB.getDefaultIcon()));
+        }
+
+        holder.username.setText(list.get(position).getUserName());
+
+
+        holder.username.setText(list.get(position).getUserName());
+        try {
+            if(list.get(position).getNickName()!=null&&list.get(position).getNickName().length()>=0)holder.username.setText(list.get(position).getNickName());
+        }
+        catch (Exception e1)
         {
 
-        }}
-        holder.username.setText(list.get(position).getUserName());
+        }
         if(list.get(position).getType()==true)holder.email.setText(list.get(position).getEmail());
         else holder.email.setText("waiting for your response");
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //holder.cardView.setEnabled(false);
                 checkStatus(position);
             }
         });
@@ -185,6 +205,16 @@ private UserItem userItem;
         notifyDataSetChanged();
         if(list.size()>0)mRecyclerView.getLayoutManager().scrollToPosition( list.size() );
     }
+    public void addItem()
+    {
+        //mNames.add(0,getRandomName());
+        //notifyDataSetChanged();
+        notifyItemInserted(0);
+       // notifyItemRangeChanged(0,mNames.size());
+        //mRecycleView.getLayoutManager().scrollToPosition(0);
+
+    }
+
     @Override
     public int getItemCount() {
         return list.size();
@@ -202,8 +232,6 @@ private UserItem userItem;
             icon =itemView.findViewById(R.id.friend_icon);
             email=itemView.findViewById(R.id.friend_email);
             username =itemView.findViewById(R.id.friend_name);
-
-
         }
     }
 }

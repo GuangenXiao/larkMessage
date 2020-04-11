@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -50,6 +51,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Map;
 
 public class MessageActivity extends AppCompatActivity {
 
@@ -93,8 +95,15 @@ public class MessageActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null)
-        {
-            actionBar.setTitle(friend.getUserName());
+        {actionBar.setTitle(friend.getUserName());
+            try {
+                if(friend.getNickName()!=null&&friend.getNickName().length()>=0)actionBar.setTitle(friend.getNickName());
+            }
+            catch (Exception e)
+            {
+
+            }
+            listenToStatus(actionBar);
         }
         recyclerView = findViewById(R.id.message_recycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -141,6 +150,48 @@ public class MessageActivity extends AppCompatActivity {
         floatTool();
         if(friend.getType()==false)showAcceptDialog();
     }
+
+    protected void listenToStatus(final ActionBar actionBar)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("UserList").document(friend.getEmail())
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        Map<String,Object> data=documentSnapshot.getData();
+                        String result=null;
+                        if(data.containsKey("status"))
+                        {
+                            Boolean status = (Boolean) data.get("status");
+                            if(status==null)
+                            {
+                                result="";
+                            }
+                            else if(status ==true)
+                            {
+                                result="(Online)";
+                            }
+                            else
+                            {
+                                result="(Offline)";
+                            }
+                        }
+                        else
+                        {
+                            result="";
+                        }
+
+                        actionBar.setTitle(friend.getUserName()+result);
+                        try {
+                            if(friend.getNickName()!=null&&friend.getNickName().length()>=0)actionBar.setTitle(friend.getNickName()+result);
+                        }
+                        catch (Exception e1)
+                        {
+
+                        }
+                    }
+                });
+    }
      void  floatTool()
     {
         SquareMenu mSquareMenu = (SquareMenu) findViewById(R.id.square_menu);
@@ -166,6 +217,7 @@ public class MessageActivity extends AppCompatActivity {
                 intent.putExtra("friend",friend);
                 intent.putExtra("user",userItem);
                 startActivity(intent);
+                finish();
 
             }
         });
@@ -233,7 +285,17 @@ public class MessageActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }*/
-                        new fileUnit().upLoadMessageImage(uri, this, userItem);
+                        Message  m= new Message();
+                        m.setUsername(userItem.getUserName());
+                        m.setReceiver(friend.getEmail());
+                        m.setContext(editText.getText().toString());
+                        m.setImageResource(userItem.getEmail()+":"+uri.getLastPathSegment());
+
+                        try {
+                            sendPhoto(m,friend);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                     }
             }
 
@@ -275,6 +337,7 @@ public class MessageActivity extends AppCompatActivity {
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         friend.setType(true);
+        friend.setLetHimAccessMoment(true);
         db.collection("UserList").document(userItem.getEmail()).collection("FriendList").document(friend.getEmail())
                 .set(friend)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -290,8 +353,28 @@ public class MessageActivity extends AppCompatActivity {
                     }
                 });
     }
+    protected void sendPhoto(final Message message, final Friend friend) throws ParseException {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        message.setPath(userItem.getEmail()+":"+DateUnit.getSystemTimeAndDate());
+        message.setStatus(false);
+        db.collection("Chatting").document(friend.getMessageId()).collection("MessageList").document(message.getPath())
+                .set(message)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        new fileUnit().upLoadMessageImage(uri, MessageActivity.this, userItem,message,friend);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
     protected void SendMessage(Message message) throws ParseException {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        message.setStatus(true);
         db.collection("Chatting").document(friend.getMessageId()).collection("MessageList").document(userItem.getUserName()+ DateUnit.getSystemTimeAndDate())
                 .set(message)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -311,8 +394,9 @@ public class MessageActivity extends AppCompatActivity {
     protected  void setListener(final Friend friend)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final CollectionReference ref =db.collection("Chatting").document(friend.getMessageId()).collection("MessageList");
-        ref.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("Chatting").document(friend.getMessageId()).collection("MessageList")
+                .whereEqualTo("status",true)
+        .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (e != null) {
@@ -329,6 +413,7 @@ public class MessageActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         list = new ArrayList<>();
         db.collection("Chatting").document(friend.getMessageId()).collection("MessageList")
+                .whereEqualTo("status",true)
                 .get()
                 .addOnCompleteListener(
                         new OnCompleteListener<QuerySnapshot>() {
@@ -339,8 +424,9 @@ public class MessageActivity extends AppCompatActivity {
                                 {
                                     for(QueryDocumentSnapshot documentSnapshot:task.getResult())
                                     {
-                                       list.add(documentSnapshot.toObject(Message.class));
-
+                                       Message message= documentSnapshot.toObject(Message.class);
+                                       message.setPath(documentSnapshot.getId());
+                                       list.add(message);
                                     }
                                     list.sort(c);
                                     Adapter.addAll(list);

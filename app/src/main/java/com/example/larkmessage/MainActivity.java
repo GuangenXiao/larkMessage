@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.larkmessage.entity.UserItem;
+import com.example.larkmessage.unit.IconDB;
 import com.example.larkmessage.unit.loginUnit;
 import com.example.larkmessage.unit.userUnit;
 import com.firebase.ui.auth.AuthUI;
@@ -29,12 +30,17 @@ import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.navigation.NavController;
@@ -46,6 +52,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -60,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private static  final  String KEY_PASSWORD="key_password";
     private  static  final  String KEY_EMAIL ="key_email";
     private UserItem userItem= null;
+    private IconDB iconDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+        iconDB= new IconDB();
         userItem= (UserItem) getIntent().getSerializableExtra("userInfo");
         ActionBar actionBar = getSupportActionBar();
 
@@ -109,12 +118,52 @@ public class MainActivity extends AppCompatActivity {
 
             navNameTextView.setText(userItem.getUserName());
             navMailTextView.setText(user.getEmail());
-            navIconImageView.setImageResource(userItem.getIcon());
-        }
 
+            if(iconDB.containKey(userItem.getIcon()))
+            {
+                navIconImageView.setImageResource(iconDB.getIconID(userItem.getIcon()));
+            }
+            else if(iconDB.containValue(userItem.getIcon()))
+            {
+                navIconImageView.setImageResource(userItem.getIcon());
+            }
+            else
+            {
+                navIconImageView.setImageResource(iconDB.getDefaultIcon());
+            }
+        }
+        AddOnline();
 
     }
 
+    public void AddOnline()
+    {
+        userItem.setStatus(true);
+        updateOnline();
+    }
+    public void RemoveOnline()
+    {
+        userItem.setStatus(false);
+        updateOnline();
+    }
+    public void updateOnline()
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("UserList").document(userItem.getEmail())
+                .update("status",userItem.getStatus())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -157,7 +206,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
         SharedPreferences prefs = getSharedPreferences( PREFS, MODE_PRIVATE );
         SharedPreferences.Editor editor = prefs.edit();
         // Put the other fields into the editor
@@ -169,6 +217,20 @@ public class MainActivity extends AppCompatActivity {
         }*/
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AddOnline();
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RemoveOnline();
+    }
     //waiting list
 /*
     public static void showChannel1Notification(Context context, PlanningItem anItem, int i) {

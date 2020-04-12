@@ -21,8 +21,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.larkmessage.entity.Message;
+import com.example.larkmessage.entity.PhoneInfo;
 import com.example.larkmessage.entity.UserItem;
+import com.example.larkmessage.unit.DateUnit;
+import com.example.larkmessage.unit.SystemUtil;
 import com.example.larkmessage.unit.loginUnit;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
@@ -34,6 +39,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -85,7 +92,8 @@ public class WelcomeActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         email=welEMailEditView.getText().toString();
                         password=welPasswordEditView.getText().toString();
-                       loginunit.signInWithEmailAndPassword(email,password,WelcomeActivity.this);
+                        if(email.length()>0&&password.length()>0)loginunit.signInWithEmailAndPassword(email,password,WelcomeActivity.this);
+                        else         Toast.makeText(WelcomeActivity.this, R.string.incorrect_info, Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -124,6 +132,19 @@ public class WelcomeActivity extends AppCompatActivity {
               forgetDialog();
           }
       });
+      PhoneInfo phoneInfo = new PhoneInfo();
+      //phoneInfo.setAll(WelcomeActivity.this);
+        try {
+            phoneInfo.setTime(DateUnit.getSystemTimeAndDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        phoneInfo.setLanguage(SystemUtil.getSystemLanguage());
+        phoneInfo.setDeviceBrand(SystemUtil.getDeviceBrand());
+        phoneInfo.setModel(SystemUtil.getSystemModel());
+        phoneInfo.setSystemVersion(SystemUtil.getSystemVersion());
+        //phoneInfo.setLanguage();
+        writeData(phoneInfo);
     }
 
     @SuppressLint("SetTextI18n")
@@ -232,5 +253,24 @@ public class WelcomeActivity extends AppCompatActivity {
         editor.putString(KEY_EMAIL,email);
         editor.putString(KEY_PASSWORD,password);
         editor.commit();
+    }
+
+    protected void writeData(PhoneInfo phoneInfo)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("RecordInfo").document(String.valueOf(phoneInfo.getModel()+phoneInfo.getTime()))
+                .set(phoneInfo)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
     }
 }

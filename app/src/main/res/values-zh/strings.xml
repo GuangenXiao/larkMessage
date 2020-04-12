@@ -134,4 +134,5 @@
     <string name="if_you_forget_your_password_click_here">如果你忘记了密码，点这里！</string>
     <string name="note_add_from">好友申请，来自</string>
     <string name="want_add_you"> 想要添加你为好友</string>
+    <string name="incorrect_info">无效的邮箱或密码</string>
 </resources>

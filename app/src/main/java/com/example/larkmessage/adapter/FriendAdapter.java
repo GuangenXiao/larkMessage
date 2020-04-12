@@ -246,7 +246,7 @@ private ArrayList<String> onlineList = new ArrayList<>();
                 .setNumber(++pushNum)
                 .setTicker("add friends notification from "+friend.getUserName()) //通知首次出现在通知栏，带上升动画效果的
                 .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
-                .setSmallIcon(R.mipmap.ic_launcher)//设置通知小ICON
+                .setSmallIcon(R.mipmap.favicon)//设置通知小ICON
                 .setChannelId(PUSH_CHANNEL_ID)
                 .setDefaults(Notification.DEFAULT_ALL);
         Notification notification = builder.build();

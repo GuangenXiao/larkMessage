@@ -338,6 +338,7 @@ public class MessageActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         friend.setType(true);
         friend.setLetHimAccessMoment(true);
+        friend.setStatus(true);
         db.collection("UserList").document(userItem.getEmail()).collection("FriendList").document(friend.getEmail())
                 .set(friend)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

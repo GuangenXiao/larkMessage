@@ -157,6 +157,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         list=null;
         list = massageItemList;
         notifyDataSetChanged();
+        mRecycleView.scrollToPosition(getItemCount()-1);
     }
     public void addItem()
     {

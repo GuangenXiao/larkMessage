@@ -303,7 +303,8 @@ public class HomeFragment extends Fragment {
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         friend.setType(true);
-        friend.setStatus(false);
+        friend.setLetHimAccessMoment(true);
+        friend.setStatus(true);
         db.collection("UserList").document(userItem.getEmail()).collection("FriendList").document(friend.getEmail())
                 .set(friend)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

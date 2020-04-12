@@ -413,39 +413,6 @@ public class HomeFragment extends Fragment {
                 });
     }
 
-    protected  void getData()
-    {
-        //list =new ArrayList<Friend>();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Message")
-                .get()
-                .addOnCompleteListener(
-                        new OnCompleteListener<QuerySnapshot>() {
-                            @RequiresApi(api = Build.VERSION_CODES.N)
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful())
-                                {
-                                    for(QueryDocumentSnapshot documentSnapshot:task.getResult())
-                                    {
-                                        Map<String,Object> m = documentSnapshot.getData();
-                                    }
-                                }
-                                else
-                                {
-                                    Log.w("tag", "error getting document ", task.getException());
-                                }
-                            }
-                        }
-                );
 
-       // Log.w("listsize", "error getting document "+list.size());
-
-        //adapter.notifyDataSetChanged();
-        //fragment.getView().requestLayout();
-        // adapter = new MassageAdapter(this,list);
-        //recyclerView.setAdapter(adapter);
-    }
 
 }

@@ -1,0 +1,131 @@
+<resources>
+    <string name="app_name">Lerche Nachricht</string>
+    <string name="navigation_drawer_open">Navigationsschublade öffnen</string>
+    <string name="navigation_drawer_close">Navigationsschublade schließen</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigationsheader</string>
+    <string name="action_settings">Die Einstellungen</string>
+
+    <string name="menu_home">Haus</string>
+    <string name="menu_gallery">Galerie</string>
+    <string name="menu_slideshow">Diashow</string>
+
+    <string name="home_second">Home Zweiter</string>
+    <string name="title_activity_login">Einloggen</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Passwort</string>
+    <string name="action_sign_in">Einloggen oder Registrieren</string>
+    <string name="action_sign_in_short">Einloggen</string>
+    <string name="welcome">"Herzlich willkommen !"</string>
+    <string name="invalid_username">Kein gültiger Benutzername</string>
+    <string name="invalid_password">Das Passwort muss> 5 Zeichen lang sein</string>
+    <string name="login_failed">"Login fehlgeschlagen"</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hallo leeres Fragment</string>
+    <string name="nav_setting">Rahmen</string>
+    <string name="nav_logout">Ausloggen</string>
+    <string name="nav_moment">Moment Galerie</string>
+    <string name="logout_version">Vielen Dank für Ihre Unterstützung unserer App!</string>
+    <string name="app_title">LARK MESSAGE</string>
+    <string name="email">EMAIL</string>
+
+    <string name="sign_in">EINLOGGEN</string>
+
+    <string name="your_email_address">deine Emailadresse</string>
+    <string name="your_password">Ihr Passwort</string>
+    <string name="name">NAME</string>
+    <string name="phone">TELEFON</string>
+    <string name="password">PASSWORT</string>
+    <string name="register">REGISTRIEREN</string>
+    <string name="cancel">STORNIEREN</string>
+    <string name="friend_dialog">FÜGEN SIE EINEN NEUEN FREUND HINZU</string>
+    <string name="title_activity_moment">Moment Aktivität</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Erstes Fragment</string>
+    <string name="second_fragment_label">Zweites Fragment</string>
+    <string name="next">Nächster</string>
+    <string name="previous">Bisherige</string>
+
+    <string name="hello_first_fragment">Hallo erstes Fragment</string>
+    <string name="hello_second_fragment">Hallo zweites Fragment. Arg:% 1 $ s</string>
+    <string name="title_activity_maps">Karte</string>
+
+    <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
+    <string name="location_permission_denied">This sample requires location permission to enable the \'my location\' layer. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'Google Maps API Demos\'.</string>
+    <string name="permission_required_toast">Location permission is required for this demo.</string>
+    <string name="added_friends">You can\'t add a same person.</string>
+    <string name="title_activity_user_info_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Mitteilungen</string>
+    <string name="sync_header">Synchronisieren</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Ihre Unterschrift</string>
+    <string name="reply_title">Standardantwortaktion</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Synchronisieren Sie E-Mails regelmäßig</string>
+    <string name="attachment_title">Laden Sie eingehende Anhänge herunter</string>
+    <string name="attachment_summary_on">Laden Sie automatisch Anhänge für eingehende E-Mails herunter</string>
+    <string name="attachment_summary_off">Laden Sie Anhänge nur herunter, wenn Sie manuell dazu aufgefordert werden</string>
+    <string name="choose_your_icon">Wählen Sie Ihr Symbol</string>
+    <string name="nickename">Spitzname</string>
+    <string name="accept">AKZEPTIEREN</string>
+    <string name="nickname">Spitzname</string>
+    <string name="waiting_for_your_resopone">warte auf deine Antwort</string>
+    <string name="question_delete_friend">Sind Sie sicher, Ihre Freunde zu löschen?</string>
+    <string name="opotion_cant_cancel_warning">Diese Option kann nicht abgebrochen werden.</string>
+    <string name="delete">Löschen</string>
+    <string name="waiting_for_friend_respone">Warten auf die Antwort eines Freundes</string>
+    <string name="delete_this_moment">Löschen Sie diesen Moment</string>
+    <string name="make_sure_delete_message">Sind Sie sicher, diese Nachricht zu löschen?</string>
+    <string name="Remove">Entfernen</string>
+    <string name="delete_this_message">Löschen Sie diese Nachricht</string>
+    <string name="only_sender_can_delete_message">Nur der Absender kann eine Nachricht löschen!</string>
+    <string name="moment_continue">Fortsetzen</string>
+    <string name="who_like_moment">Wem gefällt dieser Moment?</string>
+    <string name="who_dislike_this_moment">Wer mag diesen Moment nicht?</string>
+    <string name="makesure_delete_moment">Sind Sie sicher, diesen Moment zu löschen?</string>
+    <string name="ignore_moment">Sie sind nicht der Absender des Augenblicks. Sind Sie sicher, diesen Moment zu ignorieren? Wenn Sie das tun, werden Sie diesen Moment nicht für immer sehen!</string>
+    <string name="please_input_your_friendemail">Bitte geben Sie Ihre Freund-E-Mail-Adresse ein:</string>
+    <string name="email_address">E-Mail-Addresse</string>
+    <string name="add">HINZUFÜGEN</string>
+    <string name="click_add">Klicken Sie auf Hinzufügen</string>
+    <string name="dont_add_yourself">\" Füge dich nicht hinzu! \"</string>
+    <string name="input_is_empty">Eingabe ist leer</string>
+    <string name="click_cancel">Klicken Sie auf Abbrechen</string>
+    <string name="click_continue">Klicken Sie auf Weiter</string>
+    <string name="invaluesd_user">Ungültiger Benutzer</string>
+    <string name="internet_error">\" Internetfehler\"</string>
+    <string name="you_have_added">Du hast deinen Freund hinzugefügt</string>
+    <string name="online">(Online)</string>
+    <string name="offline">(Offline)</string>
+    <string name="do_you_want_to_accept">\"Möchten Sie die Einladung von annehmen?\"</string>
+    <string name="creat_a_moment">Jetzt einen Moment schaffen?</string>
+    <string name="choose_color">Wähle eine Farbe</string>
+    <string name="ok">\"okay \"</string>
+    <string name="invalided_email">Ungültige E-Mail</string>
+    <string name="invalided_email_phone">Ungültige E-Mail-Telefonnummer</string>
+    <string name="need_more_info">brauche mehr Infos</string>
+    <string name="email_">Email:</string>
+    <string name="phone_number_">Telefonnummer:</string>
+    <string name="forget_password">Passwort vergessen</string>
+    <string name="please_input_your_email">Bitte geben Sie Ihre E-Mail-Adresse und Telefonnummer ein:</string>
+    <string name="your_password_">Ihr Passwort:</string>
+    <string name="incorrect_phone_number">falsche Telefonnummer</string>
+    <string name="incorrect_email">Falsche Email</string>
+    <string name="no_internet">kein Internet!</string>
+    <string name="result_">Ergebnis:</string>
+	<string name="relationdate">RelationDate:</string>
+    <string name="friend_relationship">Freund Beziehung</string>
+    <string name="refuse_watch_moment">lehne ihn ab, beobachte deinen Moment</string>
+    <string name="accept_watch_moment">Akzeptiere ihn und beobachte deinen Moment</string>
+    <string name="moment_permit">Moment erlauben</string>
+    <string name="design_your_own_style">Gestalte deinen eigenen Stil</string>
+    <string name="choose_your_background_color">Wählen Sie Ihre Hintergrundfarbe</string>
+	<string name="remember_me">Behalte mich in Erinnerung</string>
+    <string name="if_you_forget_your_password_click_here">Wenn Sie Ihr Passwort vergessen haben, klicken Sie hier!</string>
+</resources>

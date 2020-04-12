@@ -185,7 +185,7 @@ public class MomentAdapter extends RecyclerView.Adapter<MomentAdapter.MomentHold
         alterDiaglog.setIcon(R.mipmap.ic_launcher);
         alterDiaglog.setTitle(R.string.delete_this_moment);
         alterDiaglog.setMessage(R.string.ignore_moment);
-        alterDiaglog.setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
+        alterDiaglog.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }

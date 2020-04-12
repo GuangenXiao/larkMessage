@@ -240,11 +240,12 @@ private ArrayList<String> onlineList = new ArrayList<>();
         notificationIntent.putExtra("user",userItem);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-        builder.setContentTitle(friend.getUserName()+" want to add you")//设置通知栏标题
+       String title= friend.getUserName()+context.getString(R.string.want_add_you);
+        builder.setContentTitle(title)//设置通知栏标题
                 .setContentIntent(pendingIntent) //设置通知栏点击意图
                 //.setContentText(anItem.getNote())
                 .setNumber(++pushNum)
-                .setTicker("add friends notification from "+friend.getUserName()) //通知首次出现在通知栏，带上升动画效果的
+                .setTicker(context.getString(R.string.note_add_from)+friend.getUserName()) //通知首次出现在通知栏，带上升动画效果的
                 .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
                 .setSmallIcon(R.mipmap.favicon)//设置通知小ICON
                 .setChannelId(PUSH_CHANNEL_ID)

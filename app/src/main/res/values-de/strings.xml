@@ -128,4 +128,6 @@
     <string name="choose_your_background_color">Wählen Sie Ihre Hintergrundfarbe</string>
 	<string name="remember_me">Behalte mich in Erinnerung</string>
     <string name="if_you_forget_your_password_click_here">Wenn Sie Ihr Passwort vergessen haben, klicken Sie hier!</string>
+    <string name="note_add_from">Benachrichtigung von Freunden hinzufügen von</string>
+    <string name="want_add_you"> will mit dir befreundet seinm</string>
 </resources>

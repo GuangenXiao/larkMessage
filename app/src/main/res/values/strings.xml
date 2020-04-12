@@ -129,4 +129,6 @@
     <string name="choose_your_background_color">Choose your background color</string>
     <string name="remember_me">Remember Me</string>
     <string name="if_you_forget_your_password_click_here">if you forget your password ,click here!</string>
+    <string name="note_add_from">\"add friends notification from \"</string>
+    <string name="want_add_you">\" want to add you\"</string>
 </resources>

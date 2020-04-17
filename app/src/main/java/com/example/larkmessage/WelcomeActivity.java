@@ -273,4 +273,19 @@ public class WelcomeActivity extends AppCompatActivity {
                     }
                 });
     }
+
+/*
+    protected void getData(PhoneInfo phoneInfo)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("RecordInfo").document(String.valueOf(phoneInfo.getModel()+phoneInfo.getTime()))
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        documentSnapshot.getData().isEmpty();
+                    }
+                });
+
+    }*/
 }

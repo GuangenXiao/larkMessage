@@ -274,7 +274,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 });
     }
 
-/*
+
     protected void getData(PhoneInfo phoneInfo)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -287,5 +287,5 @@ public class WelcomeActivity extends AppCompatActivity {
                     }
                 });
 
-    }*/
+    }
 }

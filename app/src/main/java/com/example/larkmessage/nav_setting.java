@@ -1,9 +1,12 @@
 package com.example.larkmessage;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -54,6 +57,7 @@ public class nav_setting extends Fragment {
     private View view;
     private IconAdapter Adapter;
     private RecyclerView recyclerView;
+    private  Button contactButton;
     public nav_setting() {
         // Required empty public constructor
     }
@@ -97,6 +101,7 @@ public class nav_setting extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         button =view.findViewById(R.id.color_button);
+        contactButton = view.findViewById(R.id.contact_button);
         FloatingActionButton fab = getActivity().findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +116,29 @@ public class nav_setting extends Fragment {
 
             }
         });
+        contactButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentEmail();
+            }
+        });
+    }
+    public  void IntentEmail()
+    {
+        UserItem userItem =((MainActivity)getActivity()).getUserItem();
+        if(userItem==null) return;
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData( Uri.parse("mailto:"));
+        emailIntent.putExtra(Intent.EXTRA_EMAIL,new String[]{"19107773@studentmail.ul.ie","962613262@qq.com"});
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT,"Request for assistance from: "+userItem.getEmail());
+        if(emailIntent.resolveActivity(getActivity().getPackageManager())!=null)
+        {
+            startActivity(emailIntent);
+        }
+        else
+        {
+            Toast.makeText(getActivity(),"Sorry an error happened",Toast.LENGTH_LONG).show();
+        }
     }
     public  void updateUI()
     {

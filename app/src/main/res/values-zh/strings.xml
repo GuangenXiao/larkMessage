@@ -135,4 +135,5 @@
     <string name="note_add_from">好友申请，来自</string>
     <string name="want_add_you"> 想要添加你为好友</string>
     <string name="incorrect_info">无效的邮箱或密码</string>
+    <string name="contact_us">通过邮件联系我们:</string>
 </resources>

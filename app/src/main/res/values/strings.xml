@@ -132,4 +132,5 @@
     <string name="note_add_from">\"add friends notification from \"</string>
     <string name="want_add_you">\" want to add you\"</string>
     <string name="incorrect_info">Incorrect email or phone number</string>
+    <string name="contact_us">Contact us by email</string>
 </resources>

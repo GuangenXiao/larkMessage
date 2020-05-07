@@ -52,3 +52,5 @@ Setting function:
 We believe everyone have their favorite color which can make you happy! 
 So, you can choose a color for every page to make yourself happy! We will record it and upload to our databse.
 So,after that you can see your own style in any devices. In the Final version, you can click the button to call the email app.
+
+

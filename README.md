@@ -28,8 +28,12 @@ Getting started
 
 4.then you can sharelocation,send message, share moment with your friends.
 
-5.Any more information please read the introduction.docx;
-Pointers to, e.g., Firebase project
+5.Any more information please read the introduction.docx(you can get it on this website or moodle2);
+
+
+Pointers to, 
+Firebase : https://console.firebase.google.com/project/larkmessage/overview;
+Google cloud platfrom : https://console.cloud.google.com/google/maps-apis/overview?folder=&organizationId=&project=daring-avenue-272613;
 More information
 Technical Design
 Navigation structure

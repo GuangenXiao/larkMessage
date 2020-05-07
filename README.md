@@ -44,5 +44,10 @@ Techinical Design And More Information :
 Structure.md
 (For this part ,you can find example pictures in the introduction.docx)
 
+https://github.com/GuangenXiao/larkMessage/blob/master/Structure.md
+
+
+
+
 
 

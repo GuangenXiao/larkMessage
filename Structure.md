@@ -1,3 +1,4 @@
+Really sorry for that.We dont know how to put picture in here so , you can get that in the introdcution.docx.
 Introduction:
 
 Lark message is an moble application that was designed for people daily communication. 

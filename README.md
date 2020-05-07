@@ -19,10 +19,15 @@ record the latest chat information, and remind the user through a pop-up window 
 new information is generated
 
 Getting started
+
 1.you should download the app.apk to you android device(Lollipop 5.0 or higer).
+
 2.just register a account by a legal email address.
+
 3.Then you can add a new friend.
+
 4.then you can sharelocation,send message, share moment with your friends.
+
 5.Any more information please read the introduction.docx;
 Pointers to, e.g., Firebase project
 More information

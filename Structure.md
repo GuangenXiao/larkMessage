@@ -8,9 +8,11 @@ language:
 
 First lets start with language, our app support multiple language. 
 And, it depends on your language choice. Now ,we have German ,Chinese and English.
-<img src="/Image/2.png" width=50 height=100 />
-<img src="/Image/3.png" width=50 height=100 />
-<img src="/Image/4.png" width=50 height=100 />
+
+<img src="/Image/2.png" width=150 height=300 />
+<img src="/Image/3.png" width=150 height=300  />
+<img src="/Image/4.png" width=150 height=300 />
+
 Login Function:
 
 For the login page,you have two methods to login your account.

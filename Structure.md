@@ -8,7 +8,7 @@ language:
 
 First lets start with language, our app support multiple language. 
 And, it depends on your language choice. Now ,we have German ,Chinese and English.
-![test image size](/Image/2.png){:height="100px" width="20px"}
+<img src="/Image/2.png" width=256 height=256 />
 ![Error](/Image/3.png)
 ![Error](/Image/4.png)
 Login Function:

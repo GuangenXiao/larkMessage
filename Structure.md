@@ -8,7 +8,7 @@ language:
 
 First lets start with language, our app support multiple language. 
 And, it depends on your language choice. Now ,we have German ,Chinese and English.
-
+![Error](/Image/2.png)![Error](/Image/3.png)![Error](/Image/4.png)
 Login Function:
 
 For the login page,you have two methods to login your account.

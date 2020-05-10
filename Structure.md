@@ -9,9 +9,9 @@ language:
 First lets start with language, our app support multiple language. 
 And, it depends on your language choice. Now ,we have German ,Chinese and English.
 
-<img src="/Image/2.png" width=150 height=300 />
-<img src="/Image/3.png" width=150 height=300  />
-<img src="/Image/4.png" width=150 height=300 />
+<img src="/Image/2.png" width=150 height=300 /><img src="/Image/3.png" width=150 height=300 /><img src="/Image/4.png" width=150 height=300 />
+
+
 
 Login Function:
 

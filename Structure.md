@@ -27,13 +27,15 @@ Absolutely, if you want our app record your password and account,you can choose 
 Then in the next time you use the app, you don’t need to type these information again.
 
 <img src="/Image/8.png" width=150 height=300 /><img src="/Image/9.png" width=150 height=300 /><img src="/Image/10.png" width=150 height=300 />
+
+
 Register Function:
 
 If you want to register an account ,you should use a correct email address(every email address can be registered one time.)
 And, we give you a chance to choose your icon(In the beta version ,you can’t change it forever! So, please choose your favorite one!) .
 if your want to check your password, you can use the swith (hide your password) to show your password.
 
-
+<img src="/Image/11.png" width=150 height=300 /><img src="/Image/12.png" width=150 height=300 /><img src="/Image/13.png" width=150 height=300 /><img src="/Image/14.png" width=150 height=300 />
 
 Home page:
 

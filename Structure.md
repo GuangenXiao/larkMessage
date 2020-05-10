@@ -19,14 +19,21 @@ For the login page,you have two methods to login your account.
 Absolutely ,you can use your email and password to login your account.
 If you forget your password,you can click that text. By this dialog ,you can use your email and phone number to get your password.
 (you don’t need to type it again we will do that for you! ). 
+
+
+<img src="/Image/5.png" width=150 height=300 /><img src="/Image/6.png" width=150 height=300 /><img src="/Image/7.png" width=150 height=300 />
+
 Absolutely, if you want our app record your password and account,you can choose “remember me”. 
 Then in the next time you use the app, you don’t need to type these information again.
 
+<img src="/Image/8.png" width=150 height=300 /><img src="/Image/9.png" width=150 height=300 /><img src="/Image/10.png" width=150 height=300 />
 Register Function:
 
 If you want to register an account ,you should use a correct email address(every email address can be registered one time.)
 And, we give you a chance to choose your icon(In the beta version ,you can’t change it forever! So, please choose your favorite one!) .
 if your want to check your password, you can use the swith (hide your password) to show your password.
+
+
 
 Home page:
 
